@@ -1,7 +1,7 @@
-package xfasttrie;
+package predecessor;
 
 
-public interface XTrieCodeSpec<T> {
+public interface Predecessor<T> {
 
     
     // Type T must be well defined with a compareTo Function.

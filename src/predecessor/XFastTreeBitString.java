@@ -1,10 +1,12 @@
-package xfasttrie;
+package predecessor;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class XFastTreeBitString implements XTrieCodeSpec<String> {
+public class XFastTreeBitString implements Predecessor<String> {
 
     
     
@@ -18,7 +20,8 @@ public class XFastTreeBitString implements XTrieCodeSpec<String> {
     
     //wait im just using strings this is dumb. Dont need a size map.
     private final Map<String, String> hashMap = new HashMap<String, String>();
-    
+    //store the hash set of the final elements in the tree.
+    private final Set<String> finalLevel = new HashSet<String>();
     
     /**
      * Make a new XFastTreeBitString 
@@ -33,7 +36,7 @@ public class XFastTreeBitString implements XTrieCodeSpec<String> {
     public void insert(String newObject) {
         //our new string must have proper bits
         assert newObject.length()==maxBits;
-        
+        finalLevel.add(newObject);
         //insert the string object into the hash table
         int i = newObject.length();
         while(i>0) {
@@ -50,6 +53,8 @@ public class XFastTreeBitString implements XTrieCodeSpec<String> {
     @Override
     public void delete(String delObject) {
         assert delObject.length()==maxBits;
+        
+        finalLevel.remove(delObject);
         
         int i = delObject.length();
         while (i>0) {
@@ -82,6 +87,7 @@ public class XFastTreeBitString implements XTrieCodeSpec<String> {
         assert keyObject.length()==maxBits;
 
         int i = keyObject.length();
+        //work on this later
         while(i>0) {
             final String subStr = keyObject.substring(0,i);
             final char lastChar = subStr.charAt(i-1);
