@@ -81,7 +81,18 @@ public class XFastTreeBitString implements XTrieCodeSpec<String> {
     public String predcessor(String keyObject) {
         assert keyObject.length()==maxBits;
 
-        // TODO Auto-generated method stub
+        int i = keyObject.length();
+        while(i>0) {
+            final String subStr = keyObject.substring(0,i);
+            final char lastChar = subStr.charAt(i-1);
+            ;
+        }
+        
+        int j = i;
+        while (j < keyObject.length()) {
+            ;
+        }
+        
         return null;
     }
 
