@@ -19,7 +19,7 @@ public class XFastTreeBitString implements Predecessor<String> {
     
     
     private final String DEFAULT_MAX = Integer.toString(-1);
-    private final String DEFAULT_MIN = "0"+Integer.toBinaryString((int)(Math.pow(2, 7)+1));
+    private final String DEFAULT_MIN = Integer.toBinaryString(Integer.MAX_VALUE);
     private final TrieNode<String> defaultNode = new TrieNode<String>("") {{
          this.max = DEFAULT_MAX;
          this.min = DEFAULT_MIN;
@@ -122,14 +122,15 @@ public class XFastTreeBitString implements Predecessor<String> {
                 
                 TrieNode<String> child0Node = nodeMap.getOrDefault(child0, defaultNode);
                 TrieNode<String> child1Node = nodeMap.getOrDefault(child1, defaultNode);
-                final int child0Max = Integer.parseInt(child0Node.max,2);
-                final int child1Max = Integer.parseInt(child1Node.max,2);
+                
+                final int child0Max = (child0In) ? Integer.parseInt(child0Node.max,2) : 0;
+                final int child1Max = (child1In) ? Integer.parseInt(child1Node.max,2) : 0;
 
-                final int child0Min = Integer.parseInt(child0Node.min,2);
-                final int child1Min = Integer.parseInt(child1Node.min,2);
+                final int child0Min = (child0In) ? Integer.parseInt(child0Node.min,2) : Integer.MAX_VALUE;
+                final int child1Min = (child1In) ? Integer.parseInt(child1Node.min,2) : Integer.MAX_VALUE;
                 
                 final int maxVal = Math.max(child0Max, child1Max);
-                final int minVal = Math.max(child0Min, child1Min);
+                final int minVal = Math.min(child0Min, child1Min);
                 
                 nodeMap.get(subStr).max = Integer.toBinaryString(maxVal);
                 nodeMap.get(subStr).min = Integer.toBinaryString(minVal);
@@ -138,10 +139,7 @@ public class XFastTreeBitString implements Predecessor<String> {
                 nodeMap.remove(subStr);
                 arrayMap.get(i).remove(subStr);
             }
-            
-       
-            
-            
+                       
             i=i-1;
 
         }
@@ -164,10 +162,21 @@ public class XFastTreeBitString implements Predecessor<String> {
         int low = 0;
         String retStr="";
         
-        while(high-low>0) {
+//        int tick = 0;
+        while(high-low>1) {
+//            tick = tick + 1;
+//            if (tick>100) {
+//                return null; //TIME OUT ERROR
+//            }
             //Binary search to find common ancestor
-            int i = (high - low )/2;
+            int i = (high + low )/2;
             
+            System.out.println("i:" + i + "| low: " + low + "| high: " + high );
+//            System.out.println((high-low)/2);
+
+//            System.out.print(low);
+//            System.out.print(high);
+
             final String subStr = keyObject.substring(0,i);
             if(arrayMap.get(i).contains(subStr)) {
                 low = i;
@@ -185,21 +194,19 @@ public class XFastTreeBitString implements Predecessor<String> {
         assert keyObject.length()==maxBits;
         
         
-        int i = maxBits/2;
+        final String commonAncestor = findCommonAncestor(keyObject);
+        return nodeMap.get(commonAncestor).min;
         
 
-        //we need to do a binary search on the height of the tree
-        
-        
-        return null;
     }
 
     @Override
     public String sucessor(String keyObject) {
         assert keyObject.length()==maxBits;
 
-        // TODO Auto-generated method stub
-        return null;
+        final String commonAncestor = findCommonAncestor(keyObject);
+        return nodeMap.get(commonAncestor).max;
+
     }
 
 
