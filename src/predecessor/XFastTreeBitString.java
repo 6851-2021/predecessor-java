@@ -18,6 +18,13 @@ public class XFastTreeBitString implements Predecessor<String> {
     // Made it to test things later
     
     
+    private final String DEFAULT_MAX = Integer.toString(-1);
+    private final String DEFAULT_MIN = "0"+Integer.toBinaryString((int)(Math.pow(2, 7)+1));
+    private final TrieNode<String> defaultNode = new TrieNode<String>("") {{
+         this.max = DEFAULT_MAX;
+         this.min = DEFAULT_MIN;
+    }};
+    
     //max bits
     private final int maxBits;
     //since the number of hash tables we have is fixed used a list to store them
@@ -27,12 +34,15 @@ public class XFastTreeBitString implements Predecessor<String> {
     //mabe get a better Trie Structure.
     //Store Next, Prev pointer + Decadent pointer.
     
+
+    
         
     /**
      * Make a new XFastTreeBitString 
      * @param maxBits max bits of strings.
      */
     public XFastTreeBitString(int maxBits) {
+        
         this.maxBits=maxBits;
         //creating an empty set for each level of the map
         arrayMap = new ArrayList<Set<String>>();
@@ -44,8 +54,8 @@ public class XFastTreeBitString implements Predecessor<String> {
         TrieNode<String> rootNode = new TrieNode<String>("");
 //        
 //        //give the root node min and max values OUTSIDE the universe
-        rootNode.max = Integer.toString(-1);
-        rootNode.min = Integer.toBinaryString((int)Math.pow(2,maxBits+2)+1);
+        rootNode.max = DEFAULT_MAX;
+        rootNode.min = DEFAULT_MIN;
 //        
         nodeMap=new HashMap<String, TrieNode<String>>();
         nodeMap.put("", rootNode);
@@ -54,20 +64,21 @@ public class XFastTreeBitString implements Predecessor<String> {
     
     @Override
     public void insert(String newObject) {
+        //check max bits is proper
         assert newObject.length()==maxBits;
-
+        //get Integer value of our new object
         final int newVal = Integer.parseInt(newObject, 2);
         
+        //start at bottom of tree
         int i = this.maxBits;
         while(i>=0) {
             final String subStr = newObject.substring(0,i);
             if(arrayMap.get(i).contains(subStr)) {
-              i=i-1; //end loop
-              
+              //get Trie Node in the tree
               final TrieNode<String> ancestorInside = nodeMap.get(subStr);
               final int oldMax = Integer.parseInt(ancestorInside.max, 2);
               final int oldMin = Integer.parseInt(ancestorInside.min, 2);
-              
+              //update max and min values respectively.
               if (newVal > oldMax) {
                   ancestorInside.max = newObject;
               }
@@ -76,13 +87,15 @@ public class XFastTreeBitString implements Predecessor<String> {
               }
               
             }else {
+                //add new node to tree and set its max and min properly
                 TrieNode<String> newNode = new TrieNode<String>(subStr);
                 newNode.max = newObject;
                 newNode.min = newObject;
                 arrayMap.get(i).add(subStr);
                 nodeMap.put(subStr, newNode);
-                i=i-1;
             }
+            //move back up the tree
+            i=i-1;
 //              arrayMap.get(i).add(subStr);
         }
     }
@@ -90,6 +103,49 @@ public class XFastTreeBitString implements Predecessor<String> {
     @Override
     public void delete(String delObject) {
         assert delObject.length()==maxBits;
+        
+        final int newVal = Integer.parseInt(delObject, 2);
+        //start at bottom of tree and delete nodes
+        int i = this.maxBits;
+        
+        while(i>=0) {
+            final String subStr = delObject.substring(0,i);
+            
+            final String child0 = subStr + "0";
+            final String child1 = subStr + "1";
+            //check if any child in the map.
+            //use node map so checking MaxBit+1 values wont result in errors
+            final boolean child0In = nodeMap.containsKey(child0);
+            final boolean child1In = nodeMap.containsKey(child1);
+            
+            if(child0In || child1In) {
+                
+                TrieNode<String> child0Node = nodeMap.getOrDefault(child0, defaultNode);
+                TrieNode<String> child1Node = nodeMap.getOrDefault(child1, defaultNode);
+                final int child0Max = Integer.parseInt(child0Node.max,2);
+                final int child1Max = Integer.parseInt(child1Node.max,2);
+
+                final int child0Min = Integer.parseInt(child0Node.min,2);
+                final int child1Min = Integer.parseInt(child1Node.min,2);
+                
+                final int maxVal = Math.max(child0Max, child1Max);
+                final int minVal = Math.max(child0Min, child1Min);
+                
+                nodeMap.get(subStr).max = Integer.toBinaryString(maxVal);
+                nodeMap.get(subStr).min = Integer.toBinaryString(minVal);
+
+            }else {
+                nodeMap.remove(subStr);
+                arrayMap.get(i).remove(subStr);
+            }
+            
+       
+            
+            
+            i=i-1;
+
+        }
+        
         return;
 
 
