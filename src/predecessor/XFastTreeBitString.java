@@ -171,7 +171,7 @@ public class XFastTreeBitString implements Predecessor<String> {
             //Binary search to find common ancestor
             int i = (high + low )/2;
             
-            System.out.println("i:" + i + "| low: " + low + "| high: " + high );
+//            System.out.println("i:" + i + "| low: " + low + "| high: " + high );
 //            System.out.println((high-low)/2);
 
 //            System.out.print(low);
@@ -188,6 +188,7 @@ public class XFastTreeBitString implements Predecessor<String> {
         return retStr;
     }
     
+    
     @Override
     public String predcessor(String keyObject) {
         
@@ -195,18 +196,83 @@ public class XFastTreeBitString implements Predecessor<String> {
         
         
         final String commonAncestor = findCommonAncestor(keyObject);
-        return nodeMap.get(commonAncestor).min;
         
+        //add code to handle swapping nodes
+        if(Integer.parseInt(nodeMap.get(commonAncestor).min, 2) <= Integer.parseInt(keyObject,2)) {
+            return nodeMap.get(commonAncestor).min;
+        }
+        else {
+            
+           //create a new keyObject that commona cnesotr is max
+           String zeroPad = commonAncestor;
+           while(zeroPad.length() < maxBits) {
+               zeroPad += "0";
+           }
+           
+//           System.out.println(commonAncestor+  " | " + zeroPad);
+           int leftThing = Integer.parseInt(zeroPad, 2) - 1;
+           if (leftThing <= 0) {
+               throw new NoElementException("No Predecessor Element");
+           }
+            
+           String newString = Integer.toBinaryString(leftThing);
+           while (newString.length() < maxBits) {
+               newString = "0"+newString;
+           }
+           
+           final String newAncestor = findCommonAncestor(newString);
+           if(Integer.parseInt(nodeMap.get(newAncestor).min, 2) <= Integer.parseInt(keyObject,2)) {
+               return nodeMap.get(newAncestor).max;
+           }
+           else {
+               throw new NoElementException("No Predecessor Element");
+           }
+          
+
+        }
 
     }
 
     @Override
     public String sucessor(String keyObject) {
-        assert keyObject.length()==maxBits;
-
+assert keyObject.length()==maxBits;
+        
+        
         final String commonAncestor = findCommonAncestor(keyObject);
-        return nodeMap.get(commonAncestor).max;
+        
+        //add code to handle swapping nodes
+        if(Integer.parseInt(nodeMap.get(commonAncestor).max, 2) >= Integer.parseInt(keyObject,2)) {
+            return nodeMap.get(commonAncestor).max;
+        }
+        else {
+            
+           //create a new keyObject that commona cnesotr is max
+           String zeroPad = commonAncestor;
+           while(zeroPad.length() < maxBits) {
+               zeroPad += "0";
+           }
+           
+//           System.out.println(commonAncestor+  " | " + zeroPad);
+           int leftThing = Integer.parseInt(zeroPad, 2) + 1;
+           if (leftThing >= Math.pow(2,maxBits)) {
+               throw new NoElementException("No Predecessor Element");
+           }
+            
+           String newString = Integer.toBinaryString(leftThing);
+           while (newString.length() < maxBits) {
+               newString = "0"+newString;
+           }
+           
+           final String newAncestor = findCommonAncestor(newString);
+           if(Integer.parseInt(nodeMap.get(newAncestor).min, 2) >= Integer.parseInt(keyObject,2)) {
+               return nodeMap.get(newAncestor).min;
+           }
+           else {
+               throw new NoElementException("No Predecessor Element");
+           }
+          
 
+        }
     }
 
 

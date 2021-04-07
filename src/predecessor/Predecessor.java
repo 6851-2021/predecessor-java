@@ -17,7 +17,7 @@ public interface Predecessor<T> {
     /**
      * 
      * @param delObject The object in the tree to delete
-     * If object is not found raise a ElementNotFoundException
+     * Deleting an object not in the key should do nothing
      */
     public void delete(T delObject);
     
@@ -25,6 +25,7 @@ public interface Predecessor<T> {
      * 
      * @param keyObject The object to find the previous value of
      * @return the predecssor element before this one. Not Strict (if keyObject is inside return keyObject)
+     * If no element is before keyObject throw NoElementException
     */
     public T predcessor(T keyObject);
     
