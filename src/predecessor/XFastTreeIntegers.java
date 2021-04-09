@@ -18,7 +18,12 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
 //    private final List<Set<Integer>> arraySets = new ArrayList<Set<Integer>>();
     private final Map<IntPair, TrieNode<Integer>> valueMap = new HashMap<IntPair, TrieNode<Integer>>();
     
+    private final LinkedListMap leafList;
+    
+    //default node to store  max and min values for stuff not in map
     private final TrieNode<Integer> defaultNode = new TrieNode<Integer>(0);
+    
+   
     
     
     
@@ -27,10 +32,8 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         defaultNode.min = Integer.MAX_VALUE;
         //set the max bits
         this.maxBits=maxBits;
-        //create an empty map set
-//        for (int i = 0; i<=maxBits; i++) {
-//            arraySets.set(i, new HashSet<Integer>());
-//        }
+        
+        leafList = new LinkedListMap( (int) Math.pow(2, maxBits));
         
         TrieNode<Integer> rootNode = new TrieNode<Integer>(0);
         rootNode.max = Integer.MIN_VALUE;
@@ -43,6 +46,10 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
     public void insert(Integer newVal) {
         int wrapVal = newVal;
         assert 0 <= wrapVal && wrapVal < Math.pow(2, maxBits);
+        
+        //store predecessor
+        int prevVal = -1;
+        
         //start at bottom of list and work your way back up
         for(int i = maxBits; i>=0; i--) {
             //use modular to cut off signficant bits
@@ -51,8 +58,15 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
             //if inside tree update max and min
             if(valueMap.containsKey(currPair)) {
                 TrieNode<Integer> updateNode = valueMap.get(new IntPair(i, cutValue));
-                updateNode.max = Math.max(updateNode.max, wrapVal);
-                updateNode.min = Math.min(updateNode.min, wrapVal);
+                int curMax = updateNode.max;
+                int curMin = updateNode.min;
+                
+                prevVal = Math.max(prevVal, (curMin < newVal) ? curMin : prevVal);
+                prevVal = Math.max(prevVal, (curMax < newVal) ? curMax : prevVal);
+
+                
+                updateNode.max = Math.max(curMax, wrapVal);
+                updateNode.min = Math.min(curMin, wrapVal);
             //if its not in tree add it.
             }else {
 //                arraySets.get(i).add(cutValue);
@@ -62,6 +76,10 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
                 valueMap.put(currPair, newNode);
             }
         }
+        
+        System.out.println("VALUES: " + prevVal +" "+ newVal);
+        leafList.insertAfter(prevVal, newVal);
+        
         return;
     }
     
@@ -77,18 +95,22 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
                 IntPair leftChild = new IntPair(i+1,cutValue*2);
                 IntPair rightChild = new IntPair(i+1,(int) (cutValue*2+1));
                 if(valueMap.containsKey(leftChild) || valueMap.containsKey(rightChild)) {
+                    System.out.println("checking children | " + checkPair.toString());
                     //get the new min - max value by comapring chidlrne
                     int newMax = Math.max(valueMap.getOrDefault(leftChild, defaultNode).max,
-                                          valueMap.getOrDefault(leftChild, defaultNode).max);
+                                          valueMap.getOrDefault(rightChild, defaultNode).max);
                     int newMin = Math.min(valueMap.getOrDefault(leftChild, defaultNode).min,
-                                          valueMap.getOrDefault(leftChild, defaultNode).min);
+                                          valueMap.getOrDefault(rightChild, defaultNode).min);
                     //update current pair to take in account that chidlren are gone
                     valueMap.get(checkPair).max=newMax;
                     valueMap.get(checkPair).min=newMin;
                 }else {
                     //if nethier childrena are inside delete the element from the map
                     valueMap.remove(checkPair);
+                    System.out.println("REMOVING" + checkPair.toString());
                 }
+            }else {
+                System.out.println("NOT INSIDE");
             }
         }
         return;
@@ -128,8 +150,8 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         }else {
             final int levelAncestor = commonAncestor.getFirstInt();
             final int newCheckVal = (int) (commonAncestor.getSecondInt() * Math.pow(2, maxBits-levelAncestor))- 1;
-            System.out.println(check + "|" + newCheckVal);
-            System.out.println(commonAncestor.toString());
+//            System.out.println(check + "|" + newCheckVal);
+//            System.out.println(commonAncestor.toString());
 
 //            final int newCheckVal = (int) (check - Math.pow(2, this.maxBits-commonAncestor.getFirstInt()));
 //            System.out.println(newCheckVal);
@@ -158,6 +180,11 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         }
         return retString;
     }
+    
+    @Override 
+    public String toString() {
+        return leafList.toString();
+    }
 }
 
 class IntPair{
@@ -172,7 +199,8 @@ class IntPair{
         secondInt = two;
     }
     
-    @Override public boolean equals(Object obj) {
+    @Override 
+    public boolean equals(Object obj) {
         return obj instanceof IntPair && this.sameValue((IntPair) obj);
     }
 
@@ -183,6 +211,7 @@ class IntPair{
     public int getSecondInt() {
         return secondInt;
     }
+    
     
     private boolean sameValue(IntPair that) {
        return this.firstInt==that.firstInt && this.secondInt ==that.secondInt;
@@ -195,10 +224,11 @@ class IntPair{
     
     @Override
     public String toString() {
-        return "("+firstInt + " | " + secondInt+")";
+        return "("+firstInt + " | " + Integer.toBinaryString(secondInt)+")";
     }
     
 }
+
 
 
 
