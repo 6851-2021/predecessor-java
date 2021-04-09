@@ -78,6 +78,31 @@ public class XFastTreeIntegersTest {
         
     }
     
+    @Test
+    public void testSucessor() {
+        Predecessor<Integer> check = new XFastTreeIntegers(5);
+//        check.insert(0);
+        check.insert(5);
+        check.insert(10);
+        check.insert(15);
+        check.insert(20);
+        
+//        System.out.println(((XFastTreeIntegers)check).displayMap());
+
+        assertEquals(5, check.sucessor(5), "5 failed");
+        assertEquals(10, check.sucessor(7), "7 failed");
+//        System.out.println("-------");
+        assertEquals(10, check.sucessor(8), "8 failed");
+        assertEquals(15, check.sucessor(14), "14 failed");
+        assertEquals(20, check.sucessor(16), "16 failed");
+        assertEquals(32, check.sucessor(31), "31 failed");
+
+
+
+
+        
+    }
+    
 //    @Test
     public void testInsertDelete() {
         Predecessor<Integer> check = new XFastTreeIntegers(5);

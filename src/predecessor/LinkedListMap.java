@@ -26,12 +26,22 @@ public class LinkedListMap {
         mapList.put(maxVal, tail);
     }
     
+    /**
+     * 
+     * @param key the Node to search for. Must be within range 0<= key < maxVal.
+     * @return The Node associated with key. If key not in list return Null
+     */
     public Node getValue(int key) {
         assert 0 <= key && key < maxVal : "Key:" + key + " is invalid";
         return mapList.get(key);
     }
     
-    //insert a new node after a given one
+    /**
+     * Insert a new node with value val after the node with key
+     * 
+     * @param key the key of the node to insert after. -1 is allowed as thats the head node.
+     * @param val the value of new node to create
+     */
     public void insertAfter(int key, int val) {
         //Assert that new key is in range
         assert -1 <= key && key < maxVal : "Key:" + key + " is invalid";
