@@ -26,6 +26,11 @@ public class LinkedListMap {
         mapList.put(maxVal, tail);
     }
     
+    public Node getValue(int key) {
+        assert 0 <= key && key < maxVal : "Key:" + key + " is invalid";
+        return mapList.get(key);
+    }
+    
     //insert a new node after a given one
     public void insertAfter(int key, int val) {
         //Assert that new key is in range
@@ -139,7 +144,5 @@ class Node{
     public String toString() {
         return "" +value ;
     }
-    
-    
-    
+       
 }

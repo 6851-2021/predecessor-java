@@ -18,22 +18,41 @@ public class XFastTreeIntegersTest {
     public void testInsert() {
         Predecessor<Integer> check = new XFastTreeIntegers(5);
         check.insert(0);
-        System.out.println(check.toString());
+//        System.out.println(check.toString());
 
         check.insert(5);
+        check.insert(20);
         check.insert(10);
         check.insert(15);
-        check.insert(20);
 
         System.out.println(check.toString());        
     }
     
-    
-    
-//    @Test
-    public void simplePredCheck() {
+    @Test
+    public void testDelete() {
         Predecessor<Integer> check = new XFastTreeIntegers(5);
         check.insert(0);
+//        System.out.println(check.toString());
+
+        check.insert(5);
+        check.insert(20);
+        check.insert(10);
+        check.insert(15);
+
+        System.out.println("DelTEST" + check.toString());    
+        
+        check.delete(10);
+        check.delete(15);
+        
+        System.out.println("DelTEST" + check.toString());      
+    }
+    
+    
+//    
+    @Test
+    public void simplePredCheck() {
+        Predecessor<Integer> check = new XFastTreeIntegers(5);
+//        check.insert(0);
         check.insert(5);
         check.insert(10);
         check.insert(15);
@@ -41,18 +60,17 @@ public class XFastTreeIntegersTest {
         
 //        System.out.println(((XFastTreeIntegers)check).displayMap());
 //        
-//        assertEquals(0, check.predcessor(0), "0 failed");
-//        assertEquals(0, check.predcessor(1), "1 failed");
-//        assertEquals(0, check.predcessor(2), "2 failed");
-//        assertEquals(0, check.predcessor(3), "3 failed");
-////        System.out.println(check.predcessor(8)+"TEST");
-//        assertEquals(5, check.predcessor(5), "5 failed");
-//        assertEquals(5, check.predcessor(7), "7 failed");
+        assertEquals(-1, check.predcessor(0), "0 failed");
+        assertEquals(-1, check.predcessor(1), "1 failed");
+        assertEquals(-1, check.predcessor(2), "2 failed");
+        assertEquals(-1, check.predcessor(3), "3 failed");
+        assertEquals(5, check.predcessor(5), "5 failed");
+        assertEquals(5, check.predcessor(7), "7 failed");
 //        System.out.println("-------");
-//        assertEquals(5, check.predcessor(8), "8 failed");
+        assertEquals(5, check.predcessor(8), "8 failed");
         assertEquals(10, check.predcessor(14), "14 failed");
-//        assertEquals(15, check.predcessor(16), "16 failed");
-//        assertEquals(20, check.predcessor(31), "31 failed");
+        assertEquals(15, check.predcessor(16), "16 failed");
+        assertEquals(20, check.predcessor(31), "31 failed");
 
 
 

@@ -77,7 +77,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
             }
         }
         
-        System.out.println("VALUES: " + prevVal +" "+ newVal);
+//        System.out.println("VALUES: " + prevVal +" "+ newVal);
         leafList.insertAfter(prevVal, newVal);
         
         return;
@@ -95,7 +95,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
                 IntPair leftChild = new IntPair(i+1,cutValue*2);
                 IntPair rightChild = new IntPair(i+1,(int) (cutValue*2+1));
                 if(valueMap.containsKey(leftChild) || valueMap.containsKey(rightChild)) {
-                    System.out.println("checking children | " + checkPair.toString());
+//                    System.out.println("checking children | " + checkPair.toString());
                     //get the new min - max value by comapring chidlrne
                     int newMax = Math.max(valueMap.getOrDefault(leftChild, defaultNode).max,
                                           valueMap.getOrDefault(rightChild, defaultNode).max);
@@ -107,12 +107,13 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
                 }else {
                     //if nethier childrena are inside delete the element from the map
                     valueMap.remove(checkPair);
-                    System.out.println("REMOVING" + checkPair.toString());
+//                    System.out.println("REMOVING" + checkPair.toString());
                 }
             }else {
-                System.out.println("NOT INSIDE");
+//                System.out.println("NOT INSIDE");
             }
         }
+        leafList.delete(delVal);
         return;
     }
     
@@ -148,20 +149,10 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         if(check <= keyObject) {
             return check;
         }else {
-            final int levelAncestor = commonAncestor.getFirstInt();
-            final int newCheckVal = (int) (commonAncestor.getSecondInt() * Math.pow(2, maxBits-levelAncestor))- 1;
-//            System.out.println(check + "|" + newCheckVal);
-//            System.out.println(commonAncestor.toString());
-
-//            final int newCheckVal = (int) (check - Math.pow(2, this.maxBits-commonAncestor.getFirstInt()));
-//            System.out.println(newCheckVal);
-            final int secondCheck = valueMap.get(findCommonAncestor(newCheckVal)).max;
-            if (secondCheck <= keyObject) {
-                return secondCheck;
-            }else {
-                throw new NoElementException("No Predecessor Element" + secondCheck + "|" + check);
-
-            }
+            
+            Node minNode = leafList.getNode(check);
+            return minNode.getPrev().getValue();
+            
         }
         
     }
