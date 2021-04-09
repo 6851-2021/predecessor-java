@@ -10,7 +10,27 @@ import java.util.Set;
 
 public class XFastTreeIntegersTest {
     
-    @Test
+    
+    
+    
+    
+    @Test 
+    public void testInsert() {
+        Predecessor<Integer> check = new XFastTreeIntegers(5);
+        check.insert(0);
+        System.out.println(check.toString());
+
+        check.insert(5);
+        check.insert(10);
+        check.insert(15);
+        check.insert(20);
+
+        System.out.println(check.toString());        
+    }
+    
+    
+    
+//    @Test
     public void simplePredCheck() {
         Predecessor<Integer> check = new XFastTreeIntegers(5);
         check.insert(0);
@@ -19,25 +39,43 @@ public class XFastTreeIntegersTest {
         check.insert(15);
         check.insert(20);
         
-        System.out.println(((XFastTreeIntegers)check).displayMap());
-        
-        assertEquals(0, check.predcessor(0), "0 failed");
-        assertEquals(0, check.predcessor(1), "1 failed");
-        assertEquals(0, check.predcessor(2), "2 failed");
-        assertEquals(0, check.predcessor(3), "3 failed");
-//        System.out.println(check.predcessor(8)+"TEST");
-        assertEquals(5, check.predcessor(5), "5 failed");
-        assertEquals(5, check.predcessor(7), "7 failed");
-        System.out.println("-------");
-        assertEquals(5, check.predcessor(8), "8 failed");
-        assertEquals(10, check.predcessor(12), "12 failed");
-        assertEquals(15, check.predcessor(16), "16 failed");
-        assertEquals(20, check.predcessor(31), "32 failed");
+//        System.out.println(((XFastTreeIntegers)check).displayMap());
+//        
+//        assertEquals(0, check.predcessor(0), "0 failed");
+//        assertEquals(0, check.predcessor(1), "1 failed");
+//        assertEquals(0, check.predcessor(2), "2 failed");
+//        assertEquals(0, check.predcessor(3), "3 failed");
+////        System.out.println(check.predcessor(8)+"TEST");
+//        assertEquals(5, check.predcessor(5), "5 failed");
+//        assertEquals(5, check.predcessor(7), "7 failed");
+//        System.out.println("-------");
+//        assertEquals(5, check.predcessor(8), "8 failed");
+        assertEquals(10, check.predcessor(14), "14 failed");
+//        assertEquals(15, check.predcessor(16), "16 failed");
+//        assertEquals(20, check.predcessor(31), "31 failed");
 
 
 
 
         
+    }
+    
+//    @Test
+    public void testInsertDelete() {
+        Predecessor<Integer> check = new XFastTreeIntegers(5);
+        check.insert(0);
+        check.insert(5);
+        check.insert(10);
+        check.insert(15);
+        check.insert(20);
+        
+        assertEquals(10, check.predcessor(11), "previous 14");
+        check.delete(10);
+//        System.out.println(((XFastTreeIntegers)check).displayMap());
+
+        assertEquals(5, check.predcessor(11), "Delete 14");
+        
+    
     }
 
 }
