@@ -292,53 +292,7 @@ assert keyObject.length()==maxBits;
 }
 
 
-class TrieNode<T>{
-    
-    
-    //Binary Trie Node. That has 2 children.
-    
-    //making these public cause why the hell not
-    //bad coding practices
-    
-    private final T value;
-//    public final TrieNode parent;
-    public T max;
-    public T min;
 
-
-    
-    public TrieNode(T val) {
-        this.value=val;
-//        parent =null;
-    }
-    
-    
-    public T getValue() {
-        return value;
-    }
-    
-    public int hashcode() {
-        return value.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        return that instanceof TrieNode && this.sameValue((TrieNode)that);
-    }
-    
-    private boolean sameValue(TrieNode that) {
-        // TODO Auto-generated method stub
-        return this.value.equals(that.value);
-    }
-
-
-    public String toString() {
-        return value.toString() + " Max: " + max + " Min: " +min;
-    }
-    
-    
-    
-}
 
 
 
