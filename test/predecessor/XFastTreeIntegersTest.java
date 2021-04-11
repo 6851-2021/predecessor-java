@@ -59,12 +59,15 @@ public class XFastTreeIntegersTest {
         check.insert(20);
         
 //        System.out.println(((XFastTreeIntegers)check).displayMap());
-//        
-        assertEquals(-1, check.predcessor(0), "0 failed");
-        assertEquals(-1, check.predcessor(1), "1 failed");
-        assertEquals(-1, check.predcessor(2), "2 failed");
-        assertEquals(-1, check.predcessor(3), "3 failed");
-        assertEquals(-1, check.predcessor(5), "5 failed");
+//      
+//        assertThrows(NoElementException.class,() ->{x.predcessor(s);}, "Input " +  s + "  lacked error: OUtput");
+
+        assertThrows(NoElementException.class,() ->{check.predcessor(0);});
+        assertThrows(NoElementException.class,() ->{check.predcessor(1);});
+        assertThrows(NoElementException.class,() ->{check.predcessor(2);});
+        assertThrows(NoElementException.class,() ->{check.predcessor(3);});
+        assertThrows(NoElementException.class,() ->{check.predcessor(5);});
+
         assertEquals(5, check.predcessor(7), "7 failed");
 //        System.out.println("-------");
         assertEquals(5, check.predcessor(8), "8 failed");
@@ -95,7 +98,9 @@ public class XFastTreeIntegersTest {
         assertEquals(10, check.sucessor(8), "8 failed");
         assertEquals(15, check.sucessor(14), "14 failed");
         assertEquals(20, check.sucessor(16), "16 failed");
-        assertEquals(32, check.sucessor(31), "31 failed");
+        assertThrows(NoElementException.class,() ->{check.sucessor(31);});
+
+//        assertEquals(32, check.sucessor(31), "31 failed");
 
 
 

@@ -151,7 +151,12 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         }else {
             
             Node minNode = leafList.getNode(check);
-            return minNode.getPrev().getValue();
+            
+            final int check2  = minNode.getPrev().getValue();
+            if(check2 == -1) {
+                throw new NoElementException("No Predecessor");
+            }
+            return check2;
             
         }
         
@@ -170,7 +175,13 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         }else {
             
             Node minNode = leafList.getNode(check);
-            return minNode.getNext().getValue();
+//            return 
+            
+            final int check2  = minNode.getNext().getValue();
+            if(check2 == (int)Math.pow(2, maxBits)) {
+                throw new NoElementException("No Predecessor");
+            }
+            return check2;
             
         }
     }

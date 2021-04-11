@@ -24,15 +24,16 @@ public interface Predecessor<T> {
     /**
      * 
      * @param keyObject The object to find the previous value of
-     * @return the predecssor element before this one. Not Strict (if keyObject is inside return keyObject)
-     * If no element is before keyObject throw NoElementException
+     * @return the predecssor element before this one. Returns Strict Predecessor. (Does not return itself)
+     * If no element raise NoElementException
     */
     public T predcessor(T keyObject);
     
     /**
      * 
        @param keyObject The object to find the previous value of
-     * @return the succesor element before this one. Not Strict (if keyObject is inside return keyObject)
+     * @return the succesor element before this one. Returns strict sucessor. (Does not return itself).
+     * If no element raise NoElementException
 
      */
     public T sucessor(T keyObject);
