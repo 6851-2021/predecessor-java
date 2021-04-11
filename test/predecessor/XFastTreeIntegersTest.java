@@ -39,12 +39,12 @@ public class XFastTreeIntegersTest {
         check.insert(10);
         check.insert(15);
 
-        System.out.println("DelTEST" + check.toString());    
+//        System.out.println("DelTEST" + check.toString());    
         
         check.delete(10);
         check.delete(15);
         
-        System.out.println("DelTEST" + check.toString());      
+//        System.out.println("DelTEST" + check.toString());      
     }
     
     
@@ -64,7 +64,7 @@ public class XFastTreeIntegersTest {
         assertEquals(-1, check.predcessor(1), "1 failed");
         assertEquals(-1, check.predcessor(2), "2 failed");
         assertEquals(-1, check.predcessor(3), "3 failed");
-        assertEquals(5, check.predcessor(5), "5 failed");
+        assertEquals(-1, check.predcessor(5), "5 failed");
         assertEquals(5, check.predcessor(7), "7 failed");
 //        System.out.println("-------");
         assertEquals(5, check.predcessor(8), "8 failed");
@@ -89,7 +89,7 @@ public class XFastTreeIntegersTest {
         
 //        System.out.println(((XFastTreeIntegers)check).displayMap());
 
-        assertEquals(5, check.sucessor(5), "5 failed");
+        assertEquals(10, check.sucessor(5), "5 failed");
         assertEquals(10, check.sucessor(7), "7 failed");
 //        System.out.println("-------");
         assertEquals(10, check.sucessor(8), "8 failed");

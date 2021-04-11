@@ -146,7 +146,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
 //        System.out.println(valueMap.get(commonAncestor).toString());
         final int check = valueMap.get(commonAncestor).min;
 
-        if(check <= keyObject) {
+        if(check < keyObject) {
             return check;
         }else {
             
@@ -165,7 +165,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
 //        System.out.println(valueMap.get(commonAncestor).toString());
         final int check = valueMap.get(commonAncestor).max;
 
-        if(check >= keyObject) {
+        if(check > keyObject) {
             return check;
         }else {
             
