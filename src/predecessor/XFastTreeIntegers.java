@@ -16,6 +16,8 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
     
     //only use one
 //    private final List<Set<Integer>> arraySets = new ArrayList<Set<Integer>>();
+    
+    //maybe change it to a map of sets.
     private final Map<IntPair, TrieNode<Integer>> valueMap = new HashMap<IntPair, TrieNode<Integer>>();
     
     private final LinkedListMap leafList;

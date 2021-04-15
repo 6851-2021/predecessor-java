@@ -44,40 +44,44 @@ public class XFastTreeSpeedTest {
     public void predecessorSpeed() {
         
         
-        final int maxBits = 16;
+        final int maxBits = 16; //Number of bits. Aka u = 2^{maxbits}
+        final int maxLoops =  10; //number of times to run the test
+        final int numElements = (int)Math.pow(2, maxBits-7); //size of $n$ how many elements are added. Picked randomly
         
-        Predecessor<Integer> check = new XFastTreeIntegers(maxBits);
-        Predecessor<Integer> bench = new TreeSetWrapper();
+        for(int ii = 0; ii<maxLoops; ii++) {
         
-        final int scale = (int) Math.pow(2, maxBits);
-        Set<Integer> insertSet = new HashSet<Integer>();
-        for(int i = 0; i<Math.pow(2, maxBits-7); i++) {
-            final int s = (int) (Math.random()*scale);
-            if(!insertSet.contains(s)) {
-                insertSet.add(s);
-                bench.insert(s);
-                check.insert(s);
+            Predecessor<Integer> check = new XFastTreeIntegers(maxBits);
+            Predecessor<Integer> bench = new TreeSetWrapper();
+            
+            final int scale = (int) Math.pow(2, maxBits);
+            Set<Integer> insertSet = new HashSet<Integer>();
+            for(int i = 0; i<numElements; i++) {
+                final int s = (int) (Math.random()*scale);
+                if(!insertSet.contains(s)) {
+                    insertSet.add(s);
+                    bench.insert(s);
+                    check.insert(s);
+                }
             }
+            
+            long start;
+    //        long delta;
+            
+            start = System.nanoTime();
+    //        for (int s : bench) {
+                bench.predcessor(scale/2);
+    //        }
+            long deltaB = (System.nanoTime() - start)*1000;
+            System.out.println("Bench Time"  + deltaB);
+            
+            start = System.nanoTime();
+    //        for(int s : bench) {
+                check.predcessor(scale/2);
+    //        }
+            long deltaX =  (System.nanoTime() - start)*1000;
+            System.out.println("XFast Time" + deltaX);
+            System.out.println(deltaX < deltaB);
         }
-        
-        long start;
-//        long delta;
-        
-        start = System.nanoTime();
-//        for (int s : bench) {
-            bench.predcessor(scale/2);
-//        }
-        long deltaB = (System.nanoTime() - start)*1000;
-        System.out.println("Bench Time"  + deltaB);
-        
-        start = System.nanoTime();
-//        for(int s : bench) {
-            check.predcessor(scale/2);
-//        }
-        long deltaX =  (System.nanoTime() - start)*1000;
-        System.out.println("XFast Time" + deltaX);
-        System.out.println(deltaX < deltaB);
     }
-    
 
 }
