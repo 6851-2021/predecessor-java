@@ -46,7 +46,7 @@ public class LinkedListMap {
         //Assert that new key is in range
         assert -1 <= key && key < maxVal : "Key:" + key + " is invalid";
         if(mapList.containsKey(val)) {
-            throw new AssertionError("Insert element that already exists");
+            throw new AssertionError("Insert element that already exists| key: " + key + " |value:" + val);
         }
         
         Node newNode = new Node(val);
@@ -99,9 +99,14 @@ public class LinkedListMap {
         mapList.remove(key);
     }
     
+    /**
+     * 
+     * @param key the Node to search for. Must be within range 0<= key < maxVal.
+     * @return The Node associated with key. If key not in list return Null
+     */
     public Node getNode(int key){
       //Assert that new key is in range
-        assert 0 <= key && key < maxVal;
+        assert 0 <= key && key < maxVal : "KeyEror" + key + "MaxValue " + maxVal;
         return mapList.get(key);
     }
     

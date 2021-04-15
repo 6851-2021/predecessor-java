@@ -1,22 +1,35 @@
 package predecessor;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-public class XFastTreeIntegersTest {
+public abstract class TestPredecessorInteger {
     
     
     
-    
+    public abstract Predecessor<Integer> emptyInstance(int x);
     
     @Test 
     public void testInsert() {
-        Predecessor<Integer> check = new XFastTreeIntegers(5);
+        Predecessor<Integer> check = emptyInstance(5);
+        check.insert(0);
+        
+        System.out.println(check.toString());        
+
+
+        check.insert(5);
+        check.insert(20);
+        check.insert(10);
+        check.insert(15);
+
+        System.out.println(check.toString());        
+    }
+    
+//    @Test
+    public void testDelete() {
+        Predecessor<Integer> check = emptyInstance(5);
         check.insert(0);
 //        System.out.println(check.toString());
 
@@ -25,34 +38,19 @@ public class XFastTreeIntegersTest {
         check.insert(10);
         check.insert(15);
 
-//        System.out.println(check.toString());        
-    }
-    
-    @Test
-    public void testDelete() {
-        Predecessor<Integer> check = new XFastTreeIntegers(5);
-        check.insert(0);
-
-        check.insert(5);
-        check.insert(20);
-        check.insert(10);
-        check.insert(15);
+//        System.out.println("DelTEST" + check.toString());    
         
         check.delete(10);
         check.delete(15);
         
-        //how do we handle deleting elements that dont exist
+//        System.out.println("DelTEST" + check.toString());      
     }
     
     
 //    
-    @Test
+//    @Test
     public void simplePredCheck() {
-        Predecessor<Integer> check = new XFastTreeIntegers(5);
-        
-        
-        assertThrows(NoElementException.class,() ->{check.predcessor(12);});
-
+        Predecessor<Integer> check = emptyInstance(5);
 //        check.insert(0);
         check.insert(5);
         check.insert(10);
@@ -82,20 +80,13 @@ public class XFastTreeIntegersTest {
         
     }
     
-    @Test
+//    @Test
     public void testSucessor() {
-        Predecessor<Integer> check = new XFastTreeIntegers(5);
-//        check.insert(0);
-        
-        assertThrows(NoElementException.class,() ->{check.sucessor(12);});
-
-        
+        Predecessor<Integer> check = emptyInstance(5);
         check.insert(5);
         check.insert(10);
         check.insert(15);
         check.insert(20);
-        
-//        System.out.println(((XFastTreeIntegers)check).displayMap());
 
         assertEquals(10, check.sucessor(5), "5 failed");
         assertEquals(10, check.sucessor(7), "7 failed");
@@ -105,22 +96,15 @@ public class XFastTreeIntegersTest {
         assertEquals(20, check.sucessor(16), "16 failed");
         assertThrows(NoElementException.class,() ->{check.sucessor(31);});
 
-//        assertEquals(32, check.sucessor(31), "31 failed");
-
 
 
 
         
     }
     
-    @Test
+//    @Test
     public void testInsertDelete() {
-        Predecessor<Integer> check = new XFastTreeIntegers(5);
-        
-        check.insert(31);
-        assertEquals(31, check.sucessor(5));
-        check.delete(31);
-        
+        Predecessor<Integer> check = emptyInstance(5);
         check.insert(0);
         check.insert(5);
         check.insert(10);
@@ -135,15 +119,9 @@ public class XFastTreeIntegersTest {
         
     
     }
-    
-    @Test
-    public void testQ() {
-        Predecessor<Integer> check = new XFastTreeIntegers(5);
-
-        check.insert(31);
-        assertEquals(31, check.sucessor(5));
-        assertEquals(31, check.sucessor(10));
-
-    }
 
 }
+
+
+
+

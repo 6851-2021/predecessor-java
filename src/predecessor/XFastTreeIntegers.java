@@ -25,22 +25,30 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
     //default node to store  max and min values for stuff not in map
     private final TrieNode<Integer> defaultNode = new TrieNode<Integer>(0);
     
-   
+    private final int defaultMax;
+    private final int defaultMin;
     
     
     
     public XFastTreeIntegers(int maxBits) {
-        defaultNode.max = Integer.MIN_VALUE;
-        defaultNode.min = Integer.MAX_VALUE;
+        
+        defaultMax = -1;
+        defaultMin = (int) Math.pow(2, maxBits);
+        
+        defaultNode.max = defaultMax;
+        defaultNode.min = defaultMin;
         //set the max bits
         this.maxBits=maxBits;
         
         leafList = new LinkedListMap( (int) Math.pow(2, maxBits));
         
         TrieNode<Integer> rootNode = new TrieNode<Integer>(0);
-        rootNode.max = Integer.MIN_VALUE;
-        rootNode.min = Integer.MAX_VALUE;
+        rootNode.max = defaultMax;
+        rootNode.min = defaultMin;
         valueMap.put(new IntPair(0, 0), rootNode);
+        
+//        this.insert(0);
+//        this.delete(0);
 //        arraySets.get(0).add(0);
     }
     
@@ -48,6 +56,11 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
     public void insert(Integer newVal) {
         int wrapVal = newVal;
         assert 0 <= wrapVal && wrapVal < Math.pow(2, maxBits);
+        
+        if(valueMap.containsKey(new IntPair(maxBits,wrapVal))) {
+            return;
+        }
+        
         
         //store predecessor
         int prevVal = -1;
@@ -123,6 +136,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         int low = 0;
         int high = this.maxBits;
         IntPair retPair = null;
+        int value = 0;
         while(high - low > 1) {
             final int i = (high + low ) /2;
             final int cutValue = (int) (keyObject / (Math.pow(2, maxBits-i)));
@@ -135,6 +149,11 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
                 high = i;
             }
         }
+        if(retPair == null) {
+            return new IntPair(0, 0);
+//            throw new NoElementException("Common Ancestor is null");
+//          
+        }
         return retPair;
     }
     
@@ -146,8 +165,19 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         IntPair commonAncestor = findCommonAncestor(keyObject);
 //        System.out.println(commonAncestor.toString());
 //        System.out.println(valueMap.get(commonAncestor).toString());
-        final int check = valueMap.get(commonAncestor).min;
 
+        final int check;
+        try {
+            check = valueMap.get(commonAncestor).min;
+        }catch(NullPointerException e){
+            throw new NoElementException("Common Ancestor is null");
+            
+        }
+        
+        if(check == this.defaultMin) {
+            throw new NoElementException("Empty List");
+        }
+        else
         if(check < keyObject) {
             return check;
         }else {
@@ -170,24 +200,32 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         IntPair commonAncestor = findCommonAncestor(keyObject);
 //        System.out.println(commonAncestor.toString());
 //        System.out.println(valueMap.get(commonAncestor).toString());
-        final int check = valueMap.get(commonAncestor).max;
-
-        if(check > keyObject) {
+        final int check;
+     
+        check = valueMap.get(commonAncestor).max;
+        
+        if(check == this.defaultMax) {
+            throw new NoElementException("Empty List");
+        }
+        else if(check > keyObject) {
             return check;
         }else {
-            
+            System.out.println(check + "");
             Node minNode = leafList.getNode(check);
 //            return 
             
             final int check2  = minNode.getNext().getValue();
             if(check2 == (int)Math.pow(2, maxBits)) {
-                throw new NoElementException("No Predecessor");
+                throw new NoElementException("No Sucesssor");
             }
             return check2;
             
         }
     }
 
+//    public Integer get(Integer key) {
+//        return leafList.getValue(key).getValue();
+//    }
     
     public String displayMap() {
         String retString ="";
