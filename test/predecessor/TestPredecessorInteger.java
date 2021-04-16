@@ -97,7 +97,7 @@ public abstract class TestPredecessorInteger {
         assertThrows(NoElementException.class,() ->{check.predcessor(5);});
 
         
-        System.out.println(check.toString());      
+//        System.out.println(check.toString());      
 
         assertEquals(5, check.predcessor(7), "7 failed");
 //        System.out.println("-------");
@@ -150,6 +150,40 @@ public abstract class TestPredecessorInteger {
         assertEquals(5, check.predcessor(11), "Delete 14");
         
     
+    }
+    
+    @Test public void testEdgeCases() {
+        Predecessor<Integer> check = emptyInstance(5);
+
+        check.insert(5);
+        check.insert(20);
+        check.insert(10);
+        check.insert(15);
+        check.insert(5+1);
+        check.insert(20+1);
+        check.insert(10+1);
+        check.insert(15+2);
+        check.insert(5-1);
+        check.insert(20-1);
+        check.insert(10-1);
+        
+        check.delete(10);
+        check.delete(9);
+        check.delete(11);
+        
+        System.out.println(check.toString());      
+
+        
+        assertEquals(6, check.predcessor(10));
+        assertEquals(15, check.sucessor(10));
+        
+        assertEquals(6, check.predcessor(11));
+        assertEquals(15, check.sucessor(11));
+        
+        assertEquals(6, check.predcessor(9));
+        assertEquals(15, check.sucessor(9));
+
+        
     }
 
 }
