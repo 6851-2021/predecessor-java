@@ -160,7 +160,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
     
     public Integer predcessor(Integer keyObject) {
         
-        assert 0 <= keyObject && keyObject < Math.pow(2, maxBits);
+        assert 0 <= keyObject && keyObject <= Math.pow(2, maxBits);
 
         IntPair commonAncestor = findCommonAncestor(keyObject);
 //        System.out.println(commonAncestor.toString());
@@ -195,7 +195,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
     }
     
     public Integer sucessor(Integer keyObject) {
-        assert 0 <= keyObject && keyObject < Math.pow(2, maxBits);
+        assert -1 <= keyObject && keyObject < Math.pow(2, maxBits);
 
         IntPair commonAncestor = findCommonAncestor(keyObject);
 //        System.out.println(commonAncestor.toString());
@@ -210,7 +210,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         else if(check > keyObject) {
             return check;
         }else {
-            System.out.println(check + "");
+//            System.out.println(check + "");
             Node minNode = leafList.getNode(check);
 //            return 
             

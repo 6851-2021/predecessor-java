@@ -67,33 +67,39 @@ public class YFastTrie implements Predecessor<Integer>{
      * Does nothing if the tree assocaited with z is not above the max size
      * Updates the map and rep values in the xFastTrie
      * 
-     * @param z
+     * @param z the key of the tree to split (or check to split it)
      */
     private void splitTree(int z) {
         if(treeMap.get(z).size() <= this.maxTreeSize) {
             //tree size not large enough do nothing
             return;
         }else {
-            TreeSet<Integer> oldSet = (TreeSet<Integer>) treeMap.get(z).clone();
+//            System.out.println("SPLITTING" + treeMap.get(z).size());
+            TreeSet<Integer> oldSet = new TreeSet<Integer>(treeMap.get(z));
             final int oldSize = oldSet.size();
             TreeSet<Integer> smallerSet = new TreeSet<Integer>();
             TreeSet<Integer> largerSet = new TreeSet<Integer>();
             
-            //add the s
-            for(int i =0; i<oldSize; i++) {
+            //add half the elements to the smaller set
+            for(int i =0; i<oldSize/2; i++) {
                 final int smallElement = oldSet.first();
                 oldSet.remove(smallElement);
                 smallerSet.add(smallElement);
             }
-            
+            //add the remaing elements to the larger set
             largerSet.addAll(oldSet);
             
             //assertion
             assert smallerSet.size() + largerSet.size() == oldSize : "Did not split tree properly";
             
+//            System.out.println(largerSet.toString());
+//            System.out.println(smallerSet.toString());
+            
             treeMap.remove(z);
+            //use final element of smallert set as its repersenative
             treeMap.put(smallerSet.last(), smallerSet);
-            treeMap.put(largerSet.last(), largerSet);  
+            //use the old larger repersantive for the largesr set
+            treeMap.put(z, largerSet);  
             base.insert(smallerSet.last());
         }
         
@@ -108,14 +114,14 @@ public class YFastTrie implements Predecessor<Integer>{
         
         try {
 //            System.out.println(newKey);
-            treeKey = this.base.sucessor(newKey);
-            System.out.println("FOUND:" + treeKey);
+            treeKey = this.base.sucessor(newKey-1);
+//            System.out.println("FOUND:" + treeKey);
         } catch(NoElementException e) {
             //if there is no sucessor Tree create one
             treeKey = (int) (Math.pow(2, maxBits)-1);
 //            System.out.println(base.toString());
 
-            System.out.println("NOT FOUND: " +base + " SERACHING "+newKey + " error: " + e);
+//            System.out.println("NOT FOUND: " +base + " SERACHING "+newKey + " error: " + e);
             this.base.insert(treeKey);
             TreeSet<Integer> newSet = new TreeSet<Integer>();
             newSet.add(newKey);
@@ -135,7 +141,8 @@ public class YFastTrie implements Predecessor<Integer>{
         
         int treeKey;
         try {
-            treeKey = base.sucessor(delKey);
+            //have to subtract -1 since sucessor is strict
+            treeKey = base.sucessor(delKey-1);
         } catch(NoElementException e) {
             //its not in the BST do nothing
             return;
@@ -167,14 +174,48 @@ public class YFastTrie implements Predecessor<Integer>{
 
     @Override
     public Integer predcessor(Integer keyObject) {
-        // TODO Auto-generated method stub
-        return null;
+        int keyVal = keyObject;
+        
+        int treeKey;
+        
+        try {
+            treeKey = this.base.predcessor(keyVal+1);
+        }catch (NoElementException e) {
+            treeKey = this.base.sucessor(keyVal);
+        }
+        
+        TreeSet<Integer> treeSet = treeMap.get(treeKey);
+//        int returnVal = ;
+        if (treeSet.lower(keyVal)==null) {
+            throw new NoElementException("No sucessor");
+        }else {
+            return treeSet.lower(keyVal);
+        }
+               
+        
     }
 
     @Override
     public Integer sucessor(Integer keyObject) {
-        // TODO Auto-generated method stub
-        return null;
+        int keyVal = keyObject;
+        
+        int treeKey;
+        
+        try {
+            treeKey = this.base.sucessor(keyVal);
+        }catch (NoElementException e) {
+            treeKey = this.base.predcessor(keyVal+1);
+        }
+        
+        TreeSet<Integer> treeSet = treeMap.get(treeKey);
+//        int returnVal = ;
+        if (treeSet.higher(keyVal)==null) {
+            throw new NoElementException("No sucessor");
+        }else {
+            return treeSet.higher(keyVal);
+        }
+        
+        
     }
     
     @Override

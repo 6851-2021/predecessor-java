@@ -16,18 +16,29 @@ public abstract class TestPredecessorInteger {
         Predecessor<Integer> check = emptyInstance(5);
         check.insert(0);
         
-        System.out.println(check.toString());        
+//        System.out.println(check.toString());        
 
 
         check.insert(5);
         check.insert(20);
         check.insert(10);
         check.insert(15);
+        check.insert(5+1);
+        check.insert(20+1);
+        check.insert(10+1);
+        check.insert(15+2);
+        check.insert(5-1);
+        check.insert(20-1);
+        check.insert(10-1);
+//        System.out.println("TEST:" + check.toString());        
+       
+//        System.out.println("INSERTING 14");
+        check.insert(14);
 
-        System.out.println(check.toString());        
+//        System.out.println(check.toString());        
     }
     
-//    @Test
+    @Test
     public void testDelete() {
         Predecessor<Integer> check = emptyInstance(5);
         check.insert(0);
@@ -37,18 +48,36 @@ public abstract class TestPredecessorInteger {
         check.insert(20);
         check.insert(10);
         check.insert(15);
+        check.insert(5+1);
+        check.insert(20+1);
+        check.insert(10+1);
+        check.insert(15+2);
+        check.insert(5-1);
+        check.insert(20-1);
+        check.insert(10-1);
+//        System.out.println(check.toString());      
 
 //        System.out.println("DelTEST" + check.toString());    
         
         check.delete(10);
         check.delete(15);
+//        System.out.println(check.toString());      
+        
+        
+        check.delete(0);
+        check.delete(4);
+        check.delete(5);
+        check.delete(9);
+
+//        System.out.println(check.toString());      
+
         
 //        System.out.println("DelTEST" + check.toString());      
     }
     
     
 //    
-//    @Test
+    @Test
     public void simplePredCheck() {
         Predecessor<Integer> check = emptyInstance(5);
 //        check.insert(0);
@@ -67,6 +96,9 @@ public abstract class TestPredecessorInteger {
         assertThrows(NoElementException.class,() ->{check.predcessor(3);});
         assertThrows(NoElementException.class,() ->{check.predcessor(5);});
 
+        
+        System.out.println(check.toString());      
+
         assertEquals(5, check.predcessor(7), "7 failed");
 //        System.out.println("-------");
         assertEquals(5, check.predcessor(8), "8 failed");
@@ -80,7 +112,7 @@ public abstract class TestPredecessorInteger {
         
     }
     
-//    @Test
+    @Test
     public void testSucessor() {
         Predecessor<Integer> check = emptyInstance(5);
         check.insert(5);
@@ -102,7 +134,7 @@ public abstract class TestPredecessorInteger {
         
     }
     
-//    @Test
+    @Test
     public void testInsertDelete() {
         Predecessor<Integer> check = emptyInstance(5);
         check.insert(0);
