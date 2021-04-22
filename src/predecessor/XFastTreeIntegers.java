@@ -132,6 +132,11 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         return;
     }
     
+    @Override
+    public boolean contains(Integer keyObject) {
+        return leafList.getNode(keyObject)!=null;
+    }
+
     private IntPair findCommonAncestor(int keyObject) {
         int low = 0;
         int high = this.maxBits;

@@ -61,7 +61,6 @@ public class XFastTreeBitString implements Predecessor<String> {
         nodeMap.put("", rootNode);
     }
     
-    
     @Override
     public void insert(String newObject) {
         //check max bits is proper
@@ -99,6 +98,7 @@ public class XFastTreeBitString implements Predecessor<String> {
 //              arrayMap.get(i).add(subStr);
         }
     }
+    
     
     @Override
     public void delete(String delObject) {
@@ -150,6 +150,12 @@ public class XFastTreeBitString implements Predecessor<String> {
         
     }
 
+    @Override
+    public boolean contains(String keyObject) {
+        // TODO Auto-generated method stub
+        return nodeMap.containsKey(keyObject);
+    }
+    
     /**
      * Find the section in the key with the commono anestor of key. Smallest height possible
      * 

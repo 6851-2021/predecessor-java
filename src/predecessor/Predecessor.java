@@ -22,6 +22,14 @@ public interface Predecessor<T> {
     public void delete(T delObject);
     
     /**
+     * Check if a given object in the set. Return true if it is. False Otherwise
+     * 
+     * @param keyObject Object to check if its in the structure
+     * @return True if objects inside, False otheriwse
+     */
+    public boolean contains(T keyObject);
+    
+    /**
      * 
      * @param keyObject The object to find the previous value of
      * @return the predecssor element before this one. Returns Strict Predecessor. (Does not return itself)

@@ -173,6 +173,28 @@ public class YFastTrie implements Predecessor<Integer>{
     }
 
     @Override
+    public boolean contains(Integer keyObject) {
+        int keyVal = keyObject;
+        TreeSet<Integer> bothSets = new TreeSet<Integer>();
+        int treeKey1;
+        int treeKey2;
+        
+        try {
+            treeKey1 = this.base.predcessor(keyVal+1);
+            bothSets.addAll(treeMap.get(treeKey1));
+        }catch (NoElementException e) {
+            
+        }try {
+            treeKey2 =  this.base.sucessor(keyVal);
+            bothSets.addAll(treeMap.get(treeKey2));
+        } catch (NoElementException e)  {
+            
+        }
+        
+        return bothSets.contains(keyVal);
+    }
+    
+    @Override
     public Integer predcessor(Integer keyObject) {
         int keyVal = keyObject;
         
