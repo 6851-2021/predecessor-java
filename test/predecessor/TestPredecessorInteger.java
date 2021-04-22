@@ -1,7 +1,9 @@
 package predecessor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -34,6 +36,12 @@ public abstract class TestPredecessorInteger {
        
 //        System.out.println("INSERTING 14");
         check.insert(14);
+        
+        assertTrue(check.contains(5));
+        assertTrue(check.contains(10));
+        assertTrue(check.contains(15));
+        assertFalse(check.contains(1));
+
 
 //        System.out.println(check.toString());        
     }
@@ -68,7 +76,10 @@ public abstract class TestPredecessorInteger {
         check.delete(4);
         check.delete(5);
         check.delete(9);
-
+        assertFalse(check.contains(5));
+        assertFalse(check.contains(10));
+        assertFalse(check.contains(15));
+        assertFalse(check.contains(1));
 //        System.out.println(check.toString());      
 
         
@@ -171,7 +182,7 @@ public abstract class TestPredecessorInteger {
         check.delete(9);
         check.delete(11);
         
-        System.out.println(check.toString());      
+//        System.out.println(check.toString());      
 
         
         assertEquals(6, check.predcessor(10));
