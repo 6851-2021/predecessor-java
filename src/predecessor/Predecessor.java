@@ -6,7 +6,8 @@ public interface Predecessor<T> {
     
     // Type T must be well defined with a compareTo Function.
     // Given two elements a,b of Type T that are not equal one must state that a>b or b>a.
-    // additonaly elements of Type T must be decoable into a BIT value of a fixed size.
+    // additionally elements of Type T must be decoable into a BIT value of a fixed size.
+    // These are the 5 functions to use for predecessor data structures.
     
     /**
      * 

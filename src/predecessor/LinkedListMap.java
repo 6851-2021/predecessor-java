@@ -3,15 +3,26 @@ package predecessor;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author daniel
+ *
+ * Implements a linked List map that stores a linked list in a hash table
+ */
 public class LinkedListMap {
-//    private Map<>
     
+    //stores the max value allowed in the list
     private final int maxVal;
+    //the head and tail node
     private Node head;
     private Node tail;
-    
+    //stores a map of node objects
     private Map<Integer, Node> mapList = new HashMap<Integer, Node>();
     
+    /**
+     * create a new linked list that support values strictly between
+     * -1 and maxVal
+     * @param maxVal
+     */
     public LinkedListMap(int maxVal) {
         //this is an UPPER BOUND on the size of the list
         //we can only contain elements with keys from [0, maxVal-1]

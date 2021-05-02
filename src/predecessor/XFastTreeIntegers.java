@@ -12,44 +12,36 @@ import java.util.Set;
 
 public class XFastTreeIntegers implements Predecessor<Integer>{
     
+    //max number of bits to store
     private final int maxBits;
-    
-    //only use one
-//    private final List<Set<Integer>> arraySets = new ArrayList<Set<Integer>>();
-    
-    //maybe change it to a map of sets.
+    //map to nodes on the tree
     private final Map<IntPair, TrieNode<Integer>> valueMap = new HashMap<IntPair, TrieNode<Integer>>();
-    
+    //linked List to store leaves
     private final LinkedListMap leafList;
-    
     //default node to store  max and min values for stuff not in map
     private final TrieNode<Integer> defaultNode = new TrieNode<Integer>(0);
-    
+    //Max(val,defaultMax)= val for valid inputs. Same with min
     private final int defaultMax;
     private final int defaultMin;
-    
-    
-    
+
+    /**
+     * Create a new XFastTree that supports integers from 0 to 2^maxBits-1
+     * @param maxBits the maximum bits of acceptable integers
+     * Cause of Java used signed bits must be 0 to 31 or we get errors
+     */
     public XFastTreeIntegers(int maxBits) {
         
         defaultMax = -1;
         defaultMin = (int) Math.pow(2, maxBits);
-        
         defaultNode.max = defaultMax;
         defaultNode.min = defaultMin;
         //set the max bits
-        this.maxBits=maxBits;
-        
+        this.maxBits=maxBits;     
         leafList = new LinkedListMap( (int) Math.pow(2, maxBits));
-        
         TrieNode<Integer> rootNode = new TrieNode<Integer>(0);
         rootNode.max = defaultMax;
         rootNode.min = defaultMin;
-        valueMap.put(new IntPair(0, 0), rootNode);
-        
-//        this.insert(0);
-//        this.delete(0);
-//        arraySets.get(0).add(0);
+        valueMap.put(new IntPair(0, 0), rootNode);      
     }
     
     @Override
@@ -58,13 +50,10 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         assert 0 <= wrapVal && wrapVal < Math.pow(2, maxBits);
         
         if(valueMap.containsKey(new IntPair(maxBits,wrapVal))) {
-            return;
+            return; //kill if insert element that already exist.
         }
-        
-        
         //store predecessor
-        int prevVal = -1;
-        
+        int prevVal = -1;        
         //start at bottom of list and work your way back up
         for(int i = maxBits; i>=0; i--) {
             //use modular to cut off signficant bits
@@ -78,8 +67,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
                 
                 prevVal = Math.max(prevVal, (curMin < newVal) ? curMin : prevVal);
                 prevVal = Math.max(prevVal, (curMax < newVal) ? curMax : prevVal);
-
-                
+           
                 updateNode.max = Math.max(curMax, wrapVal);
                 updateNode.min = Math.min(curMin, wrapVal);
             //if its not in tree add it.
@@ -92,9 +80,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
             }
         }
         
-//        System.out.println("VALUES: " + prevVal +" "+ newVal);
-        leafList.insertAfter(prevVal, newVal);
-        
+        leafList.insertAfter(prevVal, newVal);   
         return;
     }
     
