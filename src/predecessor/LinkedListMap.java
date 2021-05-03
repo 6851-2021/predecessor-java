@@ -21,7 +21,7 @@ public class LinkedListMap {
     /**
      * create a new linked list that support values strictly between
      * -1 and maxVal
-     * @param maxVal
+     * @param maxVal the upper value of integers allowed insided. Not inclusive.
      */
     public LinkedListMap(int maxVal) {
         //this is an UPPER BOUND on the size of the list

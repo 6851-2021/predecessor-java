@@ -47,7 +47,9 @@ public class YFastTrie implements Predecessor<Integer>{
      */
     private void mergeTrees(int x, int y) {
         
-        if(treeMap.get(x).size() >= this.minTreeSize && treeMap.get(y).size() >= this.minTreeSize && this.treeMap.size()>1) {
+        if( treeMap.get(x).size() >= this.minTreeSize &&
+            treeMap.get(y).size() >= this.minTreeSize &&
+            this.treeMap.size()>1) {
             return;
         }
         else {
@@ -88,13 +90,8 @@ public class YFastTrie implements Predecessor<Integer>{
             }
             //add the remaing elements to the larger set
             largerSet.addAll(oldSet);
-            
             //assertion
             assert smallerSet.size() + largerSet.size() == oldSize : "Did not split tree properly";
-            
-//            System.out.println(largerSet.toString());
-//            System.out.println(smallerSet.toString());
-            
             treeMap.remove(z);
             //use final element of smallert set as its repersenative
             treeMap.put(smallerSet.last(), smallerSet);
