@@ -13,6 +13,19 @@ public abstract class TestPredecessorInteger {
     
     public abstract Predecessor<Integer> emptyInstance(int x);
     
+    
+    @Test public void testEquality() {
+        Predecessor<Integer> check = emptyInstance(5);
+        Predecessor<Integer> check2 = emptyInstance(5);
+        check.insert(5);
+        check.insert(7);
+        check2.insert(5);
+        check2.insert(7);
+        assertTrue(check.equals(check2));
+
+
+    }
+    
     @Test 
     public void testInsert() {
         Predecessor<Integer> check = emptyInstance(5);
