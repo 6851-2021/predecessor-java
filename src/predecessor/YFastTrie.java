@@ -284,6 +284,9 @@ public class YFastTrie implements Predecessor<Integer>{
                 allValues.equals(theirValues);
     }
     
+    @Override public int hashCode() {
+        return this.maxBits;
+    }
     
     @Override
     public String toString() {

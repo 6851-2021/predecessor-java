@@ -223,6 +223,9 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         return this.leafList.equals(that.leafList);
     }
 
+    @Override public int hashCode() {
+        return this.maxBits;
+    }
 //    public Integer get(Integer key) {
 //        return leafList.getValue(key).getValue();
 //    }

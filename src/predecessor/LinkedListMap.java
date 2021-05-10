@@ -129,6 +129,10 @@ public class LinkedListMap {
         return this.mapList.equals(that.mapList);
     }
     
+    @Override public int hashCode() {
+        return this.maxVal;
+    }
+    
     public String toString() {
         String retString = "";
         Node pointer = head;
@@ -187,6 +191,10 @@ class Node{
 
     private boolean sameValue(Node obj) {
         return this.value == obj.value;
+    }
+    
+    @Override public int hashCode() {
+        return this.value;
     }
     
     public String toString() {
