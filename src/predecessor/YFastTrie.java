@@ -1,6 +1,7 @@
 package predecessor;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -264,6 +265,25 @@ public class YFastTrie implements Predecessor<Integer>{
         
         
     }
+    
+    @Override public boolean equals(Object obj) {
+        return obj instanceof YFastTrie && this.sameValue((YFastTrie) obj);
+    }
+
+    private boolean sameValue(YFastTrie obj) {
+        Set<Integer> allValues = new HashSet<Integer>();
+        Set<Integer> theirValues = new HashSet<Integer>();
+        for(int i : this.treeMap.keySet()) {
+            allValues.addAll(this.treeMap.get(i));
+            theirValues.addAll(obj.treeMap.get(i));
+        }
+        
+        
+        return this.base.equals(obj.base) &&
+                this.treeMap.keySet().equals(obj.treeMap.keySet()) &&
+                allValues.equals(theirValues);
+    }
+    
     
     @Override
     public String toString() {

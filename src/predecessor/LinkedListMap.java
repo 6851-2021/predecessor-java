@@ -121,6 +121,14 @@ public class LinkedListMap {
         return mapList.get(key);
     }
     
+    @Override public boolean equals(Object obj) {
+        return obj instanceof LinkedListMap && this.sameValue((LinkedListMap) obj);
+    }
+
+    private boolean sameValue(LinkedListMap that) {
+        return this.mapList.equals(that.mapList);
+    }
+    
     public String toString() {
         String retString = "";
         Node pointer = head;
@@ -171,6 +179,14 @@ class Node{
     }
     public void setPrev(Node prev) {
         this.prev = prev;
+    }
+    
+    @Override public boolean equals(Object obj) {
+        return obj instanceof Node && this.sameValue((Node) obj);
+    }
+
+    private boolean sameValue(Node obj) {
+        return this.value == obj.value;
     }
     
     public String toString() {

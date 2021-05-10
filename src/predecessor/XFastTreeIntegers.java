@@ -213,6 +213,15 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
             
         }
     }
+    
+    @Override public boolean equals(Object obj) {
+        return obj instanceof XFastTreeIntegers && this.sameValue((XFastTreeIntegers) obj);
+    }
+
+    private boolean sameValue(XFastTreeIntegers that) {
+        //TODO implement sameValue match
+        return this.leafList.equals(that.leafList);
+    }
 
 //    public Integer get(Integer key) {
 //        return leafList.getValue(key).getValue();
