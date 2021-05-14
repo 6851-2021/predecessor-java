@@ -31,7 +31,6 @@ public abstract class TestPredecessorInteger {
         Predecessor<Integer> check = emptyInstance(5);
         check.insert(0);
         
-//        System.out.println(check.toString());        
 
 
         check.insert(5);
@@ -59,12 +58,13 @@ public abstract class TestPredecessorInteger {
 //        System.out.println(check.toString());        
     }
     
+    
     @Test
     public void testDelete() {
         Predecessor<Integer> check = emptyInstance(5);
         check.insert(0);
-//        System.out.println(check.toString());
 
+        
         check.insert(5);
         check.insert(20);
         check.insert(10);
@@ -99,7 +99,17 @@ public abstract class TestPredecessorInteger {
 //        System.out.println("DelTEST" + check.toString());      
     }
     
-    
+    @Test 
+    public void deleteNonExistingElements() {
+        Predecessor<Integer> check = emptyInstance(5);
+
+        check.delete(3);
+        check.delete(12);
+
+        check.delete(15);
+
+        
+    }
 //    
     @Test
     public void simplePredCheck() {
