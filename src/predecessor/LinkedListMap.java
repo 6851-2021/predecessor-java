@@ -96,9 +96,16 @@ public class LinkedListMap {
 
    }
     
+    /**
+     * Delete the element with assocaited key (if it does not exist do nothing)
+     * @param key key of node to delete
+     */
     public void delete(int key) {
         assert 0 <= key && key < maxVal;
         Node deleteNode = mapList.get(key);
+        if(deleteNode == null) {
+            return; //cant delete an element that does not exist
+        }
         Node prevNode = deleteNode.getPrev();
         Node nextNode = deleteNode.getNext();
         
