@@ -1,5 +1,6 @@
 package predecessor;
 
+import java.util.Collection;
 
 public interface Predecessor<T> {
 
@@ -16,11 +17,21 @@ public interface Predecessor<T> {
     public void insert(T newObject);
     
     /**
+     * @param collection of objects to insert
+     */
+    public void insertAll(Collection<? extends T> objects);
+    
+    /**
      * 
      * @param delObject The object in the tree to delete
      * Deleting an object not in the key should do nothing
      */
     public void delete(T delObject);
+    
+    /**
+     * @param collection of objects to delete
+     */
+    public void deleteAll(Collection<? extends T> objects);
     
     /**
      * Check if a given object in the set. Return true if it is. False Otherwise
@@ -29,6 +40,11 @@ public interface Predecessor<T> {
      * @return True if objects inside, False otheriwse
      */
     public boolean contains(T keyObject);
+    
+    /**
+     * @param collection of objects to check if it contains
+     */
+    public boolean containsAll(Collection<? extends T> objects);
     
     /**
      * 

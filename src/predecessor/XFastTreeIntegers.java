@@ -1,6 +1,7 @@
 package predecessor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -213,6 +214,30 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
             
         }
     }
+    
+    @Override
+    public void insertAll(Collection<? extends Integer> objects) {
+        for(Integer c : objects) {
+            this.insert(c);
+        }
+    }
+    
+    @Override
+    public void deleteAll(Collection<? extends Integer> objects) {
+        for(Integer c : objects) {
+            this.delete(c);
+        }
+    }
+    @Override
+    public boolean containsAll(Collection<? extends Integer> objects) {
+        for(Integer c : objects) {
+            if(!this.contains(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     
     @Override public boolean equals(Object obj) {
         return obj instanceof XFastTreeIntegers && this.sameValue((XFastTreeIntegers) obj);

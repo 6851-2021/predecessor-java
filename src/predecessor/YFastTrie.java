@@ -1,5 +1,6 @@
 package predecessor;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -265,6 +266,30 @@ public class YFastTrie implements Predecessor<Integer>{
         
         
     }
+    
+    @Override
+    public void insertAll(Collection<? extends Integer> objects) {
+        for(Integer c : objects) {
+            this.insert(c);
+        }
+    }
+    
+    @Override
+    public void deleteAll(Collection<? extends Integer> objects) {
+        for(Integer c : objects) {
+            this.delete(c);
+        }
+    }
+    @Override
+    public boolean containsAll(Collection<? extends Integer> objects) {
+        for(Integer c : objects) {
+            if(!this.contains(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     
     @Override public boolean equals(Object obj) {
         return obj instanceof YFastTrie && this.sameValue((YFastTrie) obj);

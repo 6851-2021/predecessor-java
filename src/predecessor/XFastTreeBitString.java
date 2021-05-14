@@ -1,5 +1,6 @@
 package predecessor;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -282,6 +283,28 @@ assert keyObject.length()==maxBits;
     }
 
 
+    @Override
+    public void insertAll(Collection<? extends String> objects) {
+        for(String c : objects) {
+            this.insert(c);
+        }
+    }
+    
+    @Override
+    public void deleteAll(Collection<? extends String> objects) {
+        for(String c : objects) {
+            this.delete(c);
+        }
+    }
+    @Override
+    public boolean containsAll(Collection<? extends String> objects) {
+        for(String c : objects) {
+            if(!this.contains(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
     //Used for testing
     
     
