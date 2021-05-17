@@ -1,8 +1,10 @@
 package predecessor;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -21,7 +23,6 @@ public class YFastTrie implements Predecessor<Integer>{
     private final int minTreeSize;
     private final int maxTreeSize;
     
-    //aska bout this since im kinda dstuck
     
     
     public YFastTrie(int bitLength) {
@@ -39,7 +40,7 @@ public class YFastTrie implements Predecessor<Integer>{
     
     
     /**
-     * Merge the trees assoicated with paramters x and y
+     * Merge the trees associated with parameters x and y
      * If resulting tree has more than max size length
      * Updates the map and rep values in the xFastTrie
      * Tree should be next to each other
@@ -67,8 +68,8 @@ public class YFastTrie implements Predecessor<Integer>{
     }
     
     /**
-     * Split the tree asocaited with paratmer z into 2 smaller trees
-     * Does nothing if the tree assocaited with z is not above the max size
+     * Split the tree associated with parameter z into 2 smaller trees
+     * Does nothing if the tree associated with z is not above the max size
      * Updates the map and rep values in the xFastTrie
      * 
      * @param z the key of the tree to split (or check to split it)
@@ -95,9 +96,9 @@ public class YFastTrie implements Predecessor<Integer>{
             //assertion
             assert smallerSet.size() + largerSet.size() == oldSize : "Did not split tree properly";
             treeMap.remove(z);
-            //use final element of smallert set as its repersenative
+            //use final element of smaller set as its representative
             treeMap.put(smallerSet.last(), smallerSet);
-            //use the old larger repersantive for the largesr set
+            //use the old larger representative for the larger set
             treeMap.put(z, largerSet);  
             base.insert(smallerSet.last());
         }
@@ -113,7 +114,7 @@ public class YFastTrie implements Predecessor<Integer>{
         
         try {
 //            System.out.println(newKey);
-            treeKey = this.base.sucessor(newKey-1);
+            treeKey = this.base.successor(newKey-1);
 //            System.out.println("FOUND:" + treeKey);
         } catch(NoElementException e) {
             //if there is no sucessor Tree create one
@@ -141,7 +142,7 @@ public class YFastTrie implements Predecessor<Integer>{
         int treeKey;
         try {
             //have to subtract -1 since sucessor is strict
-            treeKey = base.sucessor(delKey-1);
+            treeKey = base.successor(delKey-1);
         } catch(NoElementException e) {
             //its not in the BST do nothing
             return;
@@ -152,13 +153,13 @@ public class YFastTrie implements Predecessor<Integer>{
         
         try {
             //merge with sucessor
-            int nextTreeKey = base.sucessor(treeKey);
+            int nextTreeKey = base.successor(treeKey);
             this.mergeTrees(treeKey, nextTreeKey);
             
         } catch (NoElementException e) {
             try {
                 //memrge with predecessor
-                int prevTreeKey = base.predcessor(treeKey);
+                int prevTreeKey = base.predecessor(treeKey);
                 this.mergeTrees(treeKey, prevTreeKey);
             }
             catch(NoElementException ee) {
@@ -174,64 +175,84 @@ public class YFastTrie implements Predecessor<Integer>{
     @Override
     public boolean contains(Integer keyObject) {
         int keyVal = keyObject;
-        TreeSet<Integer> bothSets = new TreeSet<Integer>();
+//        TreeSet<Integer> bothSets = new TreeSet<Integer>();
+        //Store the given trees
+        List<TreeSet<Integer>> treeSets = new ArrayList<TreeSet<Integer>>();
+
         int treeKey1;
         int treeKey2;
         
         try {
-            treeKey1 = this.base.predcessor(keyVal+1);
-            bothSets.addAll(treeMap.get(treeKey1));
+            treeKey1 = this.base.predecessor(keyVal+1);
+            treeSets.add(treeMap.get(treeKey1));
+//            bothSets.addAll(treeMap.get(treeKey1));
         }catch (NoElementException e) {
             
         }try {
-            treeKey2 =  this.base.sucessor(keyVal);
-            bothSets.addAll(treeMap.get(treeKey2));
+            treeKey2 =  this.base.successor(keyVal);
+//            bothSets.addAll(treeMap.get(treeKey2));
+            treeSets.add(treeMap.get(treeKey2));
         } catch (NoElementException e)  {
             
         }
         
-        return bothSets.contains(keyVal);
+        for (TreeSet<Integer> ts : treeSets) {
+            if(ts.contains(keyObject)) {
+                return true;
+            }
+        }
+
+        return false;
     }
     
     @Override
-    public Integer predcessor(Integer keyObject) {
+    public Integer predecessor(Integer keyObject) {
         int keyVal = keyObject;
         
         int treeKey1;
         int treeKey2;
         
-        TreeSet<Integer> bothSets = new TreeSet<Integer>();
-        
-       
-        
+//        TreeSet<Integer> bothSets = new TreeSet<Integer>();
+        List<TreeSet<Integer>> treeSets = new ArrayList<TreeSet<Integer>>();
         
         try {
-            treeKey1 = this.base.predcessor(keyVal+1);
-            bothSets.addAll(treeMap.get(treeKey1));
-            int treeKey3 = this.base.predcessor(treeKey1);
-            bothSets.addAll(treeMap.get(treeKey3));
+            treeKey1 = this.base.predecessor(keyVal+1);
+            treeSets.add(treeMap.get(treeKey1));
+            
+//            bothSets.addAll(treeMap.get(treeKey1));
+            int treeKey3 = this.base.predecessor(treeKey1);
+            treeSets.add(treeMap.get(treeKey3));
+//            bothSets.addAll(treeMap.get(treeKey3));
         }catch (NoElementException e) {
             
         }try {
-            treeKey2 =  this.base.sucessor(keyVal);
-            bothSets.addAll(treeMap.get(treeKey2));
+            treeKey2 =  this.base.successor(keyVal);
+            treeSets.add(treeMap.get(treeKey2));
+//            bothSets.addAll(treeMap.get(treeKey2));
         } catch (NoElementException e)  {
             
         }
+
+        //query given trees
+        int retVal = -1;
+        for (TreeSet<Integer> ts : treeSets) {
+            if(ts.lower(keyVal)!= null) {
+                retVal = Math.max(retVal, ts.lower(keyVal));
+            }
+        }
         
-//        TreeSet<Integer> treeSet = treeMap.get(treeKey);
-//        int returnVal = ;
-        if (bothSets.lower(keyVal)==null) {
+        
+        if (retVal==-1) {
             throw new NoElementException("No sucessor");
         }else {
-            return bothSets.lower(keyVal);
+            return retVal;
         }
                
         
     }
 
     @Override
-    public Integer sucessor(Integer keyObject) {
+    public Integer successor(Integer keyObject) {
         int keyVal = keyObject;
         
 //        int treeKey;
@@ -239,30 +260,45 @@ public class YFastTrie implements Predecessor<Integer>{
         int treeKey1;
         int treeKey2;
         
-        TreeSet<Integer> bothSets = new TreeSet<Integer>();
+//        TreeSet<Integer> bothSets = new TreeSet<Integer>();
+        List<TreeSet<Integer>> treeSets = new ArrayList<TreeSet<Integer>>();
+
         
         try {
-            treeKey1 = this.base.predcessor(keyVal+1);
-            bothSets.addAll(treeMap.get(treeKey1));
+            treeKey1 = this.base.predecessor(keyVal+1);
+            treeSets.add(treeMap.get(treeKey1));
+
+//            bothSets.addAll(treeMap.get(treeKey1));
         }catch (NoElementException e) {
             
         }try {
-            treeKey2 =  this.base.sucessor(keyVal);
-            bothSets.addAll(treeMap.get(treeKey2));
-            int treeKey3 = this.base.sucessor(treeKey2);
-            bothSets.addAll(treeMap.get(treeKey3));
+            treeKey2 =  this.base.successor(keyVal);
+            treeSets.add(treeMap.get(treeKey2));
+
+//            bothSets.addAll(treeMap.get(treeKey2));
+            int treeKey3 = this.base.successor(treeKey2);
+            treeSets.add(treeMap.get(treeKey3));
+
+//            bothSets.addAll(treeMap.get(treeKey3));
         } catch (NoElementException e)  {
             
         }
         
-//        TreeSet<Integer> treeSet = treeMap.get(treeKey);
-//        int returnVal = ;
-//        System.out.println(bothSets.toString() + " "+ keyVal);
-        if (bothSets.higher(keyVal)==null) {
+         //query given trees
+        int retVal = (int)Math.pow(2, this.maxBits);
+        for (TreeSet<Integer> ts : treeSets) {
+            if(ts.higher(keyVal)!= null) {
+                retVal = Math.min(retVal, ts.higher(keyVal));
+            }
+        }
+        
+        
+        if (retVal==(int)Math.pow(2, this.maxBits)) {
             throw new NoElementException("No sucessor");
         }else {
-            return bothSets.higher(keyVal);
+            return retVal;
         }
+           
         
         
     }

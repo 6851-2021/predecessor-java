@@ -197,7 +197,7 @@ public class XFastTreeBitString implements Predecessor<String> {
     
     
     @Override
-    public String predcessor(String keyObject) {
+    public String predecessor(String keyObject) {
         
         assert keyObject.length()==maxBits;
         
@@ -241,7 +241,7 @@ public class XFastTreeBitString implements Predecessor<String> {
     }
 
     @Override
-    public String sucessor(String keyObject) {
+    public String successor(String keyObject) {
 assert keyObject.length()==maxBits;
         
         

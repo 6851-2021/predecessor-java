@@ -57,7 +57,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         int prevVal = -1;        
         //start at bottom of list and work your way back up
         for(int i = maxBits; i>=0; i--) {
-            //use modular to cut off signficant bits
+            //use modular to cut off significant bits
             int cutValue =  (int) (wrapVal / (Math.pow(2, maxBits-i)));
             IntPair currPair = new IntPair(i, cutValue);
             //if inside tree update max and min
@@ -98,16 +98,16 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
                 IntPair rightChild = new IntPair(i+1,(int) (cutValue*2+1));
                 if(valueMap.containsKey(leftChild) || valueMap.containsKey(rightChild)) {
 //                    System.out.println("checking children | " + checkPair.toString());
-                    //get the new min - max value by comapring chidlrne
+                    //get the new min - max value by comparing children
                     int newMax = Math.max(valueMap.getOrDefault(leftChild, defaultNode).max,
                                           valueMap.getOrDefault(rightChild, defaultNode).max);
                     int newMin = Math.min(valueMap.getOrDefault(leftChild, defaultNode).min,
                                           valueMap.getOrDefault(rightChild, defaultNode).min);
-                    //update current pair to take in account that chidlren are gone
+                    //update current pair to take in account that children are gone
                     valueMap.get(checkPair).max=newMax;
                     valueMap.get(checkPair).min=newMin;
                 }else {
-                    //if nethier childrena are inside delete the element from the map
+                    //if neither children are inside delete the element from the map
                     valueMap.remove(checkPair);
 //                    System.out.println("REMOVING" + checkPair.toString());
                 }
@@ -150,7 +150,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
     }
     
     
-    public Integer predcessor(Integer keyObject) {
+    public Integer predecessor(Integer keyObject) {
         
         assert 0 <= keyObject && keyObject <= Math.pow(2, maxBits);
 
@@ -186,7 +186,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         
     }
     
-    public Integer sucessor(Integer keyObject) {
+    public Integer successor(Integer keyObject) {
         assert -1 <= keyObject && keyObject < Math.pow(2, maxBits);
 
         IntPair commonAncestor = findCommonAncestor(keyObject);

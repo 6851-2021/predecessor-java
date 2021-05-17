@@ -53,12 +53,12 @@ public class TreeSetWrapper implements Predecessor<Integer> {
     }
 
     @Override
-    public Integer predcessor(Integer keyObject) {
+    public Integer predecessor(Integer keyObject) {
         return this.treeSet.lower(keyObject);
     }
 
     @Override
-    public Integer sucessor(Integer keyObject) {
+    public Integer successor(Integer keyObject) {
         return this.treeSet.higher(keyObject);
     }
 
