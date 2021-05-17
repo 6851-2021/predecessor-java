@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
 public abstract class TestPredecessorInteger {
@@ -161,10 +164,6 @@ public abstract class TestPredecessorInteger {
         assertEquals(15, check.successor(14), "14 failed");
         assertEquals(20, check.successor(16), "16 failed");
         assertThrows(NoElementException.class,() ->{check.successor(31);});
-
-
-
-
         
     }
     
@@ -216,10 +215,49 @@ public abstract class TestPredecessorInteger {
         
         assertEquals(6, check.predecessor(9));
         assertEquals(15, check.successor(9));
-
         
     }
 
+    
+    //large scale comparison where we compare toa  tree set
+    @Test public void testCompareToTreeSet() {
+        
+        final int universeBits = 20;
+        final int numberOfElements = 1000;
+        final int queries = 100;
+        
+        final int scale = (int)  Math.pow(2, universeBits) ;
+        
+        //create a list of element to put inside
+        final Set<Integer> additionSet = new HashSet<Integer>();
+        for(int i = 0; i < numberOfElements; i++ ) {
+            final int newValue = (int) (Math.random() * scale);
+            additionSet.add(newValue);
+        }
+//        System.out.println(additionSet);
+//        create list of elements to query
+        final Set<Integer> querySet = new HashSet<Integer>();
+        for(int i = 0; i < queries; i++ ) {
+            final int newValue = (int) (Math.random() * scale);
+            additionSet.add(newValue);
+        }
+
+        
+        Predecessor<Integer> testPredecessor = emptyInstance(universeBits);
+        Predecessor<Integer> comparisonPredecessor = new TreeSetWrapper();
+        
+        testPredecessor.insertAll(additionSet);
+        comparisonPredecessor.insertAll(additionSet);
+        
+        for(int q : querySet) {
+            assertEquals(comparisonPredecessor.successor(q),
+                    testPredecessor.successor(q));
+            assertEquals(comparisonPredecessor.predecessor(q),
+                    testPredecessor.predecessor(q));
+        }
+        
+        
+    }
 }
 
 
