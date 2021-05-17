@@ -51,7 +51,7 @@ public class XFastTreeIntegersTest {
         Predecessor<Integer> check = new XFastTreeIntegers(5);
         
         
-        assertThrows(NoElementException.class,() ->{check.predcessor(12);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(12);});
 
 //        check.insert(0);
         check.insert(5);
@@ -63,18 +63,18 @@ public class XFastTreeIntegersTest {
 //      
 //        assertThrows(NoElementException.class,() ->{x.predcessor(s);}, "Input " +  s + "  lacked error: OUtput");
 
-        assertThrows(NoElementException.class,() ->{check.predcessor(0);});
-        assertThrows(NoElementException.class,() ->{check.predcessor(1);});
-        assertThrows(NoElementException.class,() ->{check.predcessor(2);});
-        assertThrows(NoElementException.class,() ->{check.predcessor(3);});
-        assertThrows(NoElementException.class,() ->{check.predcessor(5);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(0);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(1);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(2);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(3);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(5);});
 
-        assertEquals(5, check.predcessor(7), "7 failed");
+        assertEquals(5, check.predecessor(7), "7 failed");
 //        System.out.println("-------");
-        assertEquals(5, check.predcessor(8), "8 failed");
-        assertEquals(10, check.predcessor(14), "14 failed");
-        assertEquals(15, check.predcessor(16), "16 failed");
-        assertEquals(20, check.predcessor(31), "31 failed");
+        assertEquals(5, check.predecessor(8), "8 failed");
+        assertEquals(10, check.predecessor(14), "14 failed");
+        assertEquals(15, check.predecessor(16), "16 failed");
+        assertEquals(20, check.predecessor(31), "31 failed");
 
 
 
@@ -87,7 +87,7 @@ public class XFastTreeIntegersTest {
         Predecessor<Integer> check = new XFastTreeIntegers(5);
 //        check.insert(0);
         
-        assertThrows(NoElementException.class,() ->{check.sucessor(12);});
+        assertThrows(NoElementException.class,() ->{check.successor(12);});
 
         
         check.insert(5);
@@ -97,13 +97,13 @@ public class XFastTreeIntegersTest {
         
 //        System.out.println(((XFastTreeIntegers)check).displayMap());
 
-        assertEquals(10, check.sucessor(5), "5 failed");
-        assertEquals(10, check.sucessor(7), "7 failed");
+        assertEquals(10, check.successor(5), "5 failed");
+        assertEquals(10, check.successor(7), "7 failed");
 //        System.out.println("-------");
-        assertEquals(10, check.sucessor(8), "8 failed");
-        assertEquals(15, check.sucessor(14), "14 failed");
-        assertEquals(20, check.sucessor(16), "16 failed");
-        assertThrows(NoElementException.class,() ->{check.sucessor(31);});
+        assertEquals(10, check.successor(8), "8 failed");
+        assertEquals(15, check.successor(14), "14 failed");
+        assertEquals(20, check.successor(16), "16 failed");
+        assertThrows(NoElementException.class,() ->{check.successor(31);});
 
 //        assertEquals(32, check.sucessor(31), "31 failed");
 
@@ -118,7 +118,7 @@ public class XFastTreeIntegersTest {
         Predecessor<Integer> check = new XFastTreeIntegers(5);
         
         check.insert(31);
-        assertEquals(31, check.sucessor(5));
+        assertEquals(31, check.successor(5));
         check.delete(31);
         
         check.insert(0);
@@ -127,11 +127,11 @@ public class XFastTreeIntegersTest {
         check.insert(15);
         check.insert(20);
         
-        assertEquals(10, check.predcessor(11), "previous 14");
+        assertEquals(10, check.predecessor(11), "previous 14");
         check.delete(10);
 //        System.out.println(((XFastTreeIntegers)check).displayMap());
 
-        assertEquals(5, check.predcessor(11), "Delete 14");
+        assertEquals(5, check.predecessor(11), "Delete 14");
         
     
     }
@@ -141,8 +141,8 @@ public class XFastTreeIntegersTest {
         Predecessor<Integer> check = new XFastTreeIntegers(5);
 
         check.insert(31);
-        assertEquals(31, check.sucessor(5));
-        assertEquals(31, check.sucessor(10));
+        assertEquals(31, check.successor(5));
+        assertEquals(31, check.successor(10));
 
     }
 

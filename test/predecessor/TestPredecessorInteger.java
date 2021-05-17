@@ -124,21 +124,21 @@ public abstract class TestPredecessorInteger {
 //      
 //        assertThrows(NoElementException.class,() ->{x.predcessor(s);}, "Input " +  s + "  lacked error: OUtput");
 
-        assertThrows(NoElementException.class,() ->{check.predcessor(0);});
-        assertThrows(NoElementException.class,() ->{check.predcessor(1);});
-        assertThrows(NoElementException.class,() ->{check.predcessor(2);});
-        assertThrows(NoElementException.class,() ->{check.predcessor(3);});
-        assertThrows(NoElementException.class,() ->{check.predcessor(5);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(0);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(1);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(2);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(3);});
+        assertThrows(NoElementException.class,() ->{check.predecessor(5);});
 
         
 //        System.out.println(check.toString());      
 
-        assertEquals(5, check.predcessor(7), "7 failed");
+        assertEquals(5, check.predecessor(7), "7 failed");
 //        System.out.println("-------");
-        assertEquals(5, check.predcessor(8), "8 failed");
-        assertEquals(10, check.predcessor(14), "14 failed");
-        assertEquals(15, check.predcessor(16), "16 failed");
-        assertEquals(20, check.predcessor(31), "31 failed");
+        assertEquals(5, check.predecessor(8), "8 failed");
+        assertEquals(10, check.predecessor(14), "14 failed");
+        assertEquals(15, check.predecessor(16), "16 failed");
+        assertEquals(20, check.predecessor(31), "31 failed");
 
 
 
@@ -154,13 +154,13 @@ public abstract class TestPredecessorInteger {
         check.insert(15);
         check.insert(20);
 
-        assertEquals(10, check.sucessor(5), "5 failed");
-        assertEquals(10, check.sucessor(7), "7 failed");
+        assertEquals(10, check.successor(5), "5 failed");
+        assertEquals(10, check.successor(7), "7 failed");
 //        System.out.println("-------");
-        assertEquals(10, check.sucessor(8), "8 failed");
-        assertEquals(15, check.sucessor(14), "14 failed");
-        assertEquals(20, check.sucessor(16), "16 failed");
-        assertThrows(NoElementException.class,() ->{check.sucessor(31);});
+        assertEquals(10, check.successor(8), "8 failed");
+        assertEquals(15, check.successor(14), "14 failed");
+        assertEquals(20, check.successor(16), "16 failed");
+        assertThrows(NoElementException.class,() ->{check.successor(31);});
 
 
 
@@ -177,11 +177,11 @@ public abstract class TestPredecessorInteger {
         check.insert(15);
         check.insert(20);
         
-        assertEquals(10, check.predcessor(11), "previous 14");
+        assertEquals(10, check.predecessor(11), "previous 14");
         check.delete(10);
 //        System.out.println(((XFastTreeIntegers)check).displayMap());
 
-        assertEquals(5, check.predcessor(11), "Delete 14");
+        assertEquals(5, check.predecessor(11), "Delete 14");
         
     
     }
@@ -208,14 +208,14 @@ public abstract class TestPredecessorInteger {
 //        System.out.println(check.toString());      
 
         
-        assertEquals(6, check.predcessor(10));
-        assertEquals(15, check.sucessor(10));
+        assertEquals(6, check.predecessor(10));
+        assertEquals(15, check.successor(10));
         
-        assertEquals(6, check.predcessor(11));
-        assertEquals(15, check.sucessor(11));
+        assertEquals(6, check.predecessor(11));
+        assertEquals(15, check.successor(11));
         
-        assertEquals(6, check.predcessor(9));
-        assertEquals(15, check.sucessor(9));
+        assertEquals(6, check.predecessor(9));
+        assertEquals(15, check.successor(9));
 
         
     }

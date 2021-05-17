@@ -69,14 +69,14 @@ public class XFastTreeSpeedTest {
             
             start = System.nanoTime();
     //        for (int s : bench) {
-                bench.predcessor(scale/2);
+                bench.predecessor(scale/2);
     //        }
             long deltaB = (System.nanoTime() - start)*1000;
             System.out.println("Bench Time"  + deltaB);
             
             start = System.nanoTime();
     //        for(int s : bench) {
-                check.predcessor(scale/2);
+                check.predecessor(scale/2);
     //        }
             long deltaX =  (System.nanoTime() - start)*1000;
             System.out.println("XFast Time" + deltaX);

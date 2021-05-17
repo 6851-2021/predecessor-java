@@ -28,7 +28,7 @@ class XFastTreeBitStringTest {
         x.insert("10000");
         x.insert("10110");
         
-        assertEquals("00000", x.predcessor("00001"), "Wrong Predecsotrr");
+        assertEquals("00000", x.predecessor("00001"), "Wrong Predecsotrr");
         
         return;
     }
@@ -47,8 +47,8 @@ class XFastTreeBitStringTest {
         
         x.delete("10000");
         
-        assertEquals("10001",x.sucessor("10000"));
-        assertEquals("00101",x.predcessor("10000"));
+        assertEquals("10001",x.successor("10000"));
+        assertEquals("00101",x.predecessor("10000"));
 
     }
     
@@ -61,7 +61,7 @@ class XFastTreeBitStringTest {
         Set<String> testSet = Set.of("11111", "01011", "01100", "01010");
         
         for(String s : testSet) { 
-            assertEquals("01010", x.predcessor(s));
+            assertEquals("01010", x.predecessor(s));
          }
     }
     
@@ -74,7 +74,7 @@ class XFastTreeBitStringTest {
         Set<String> testSet = Set.of("00111", "01001", "00011", "00100", "00010");
         
         for(String s : testSet) { 
-            assertThrows(NoElementException.class,() ->{x.predcessor(s);}, "Input " +  s + "  lacked error: OUtput");
+            assertThrows(NoElementException.class,() ->{x.predecessor(s);}, "Input " +  s + "  lacked error: OUtput");
 //            assertEquals("01010", x.predcessor(s));
          }
     }
@@ -89,11 +89,11 @@ class XFastTreeBitStringTest {
         Set<String> errorSet = Set.of("11110", "11111");
         
         for(String s : testSet) { 
-            assertEquals("11101", x.sucessor(s));
+            assertEquals("11101", x.successor(s));
          }
         
         for(String s : errorSet) {
-            assertThrows(NoElementException.class, () -> {x.sucessor(s);},"Inputs "+s+ "lackeed Erorr:");
+            assertThrows(NoElementException.class, () -> {x.successor(s);},"Inputs "+s+ "lackeed Erorr:");
          }
     }
     
