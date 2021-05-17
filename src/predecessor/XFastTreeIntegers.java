@@ -58,7 +58,8 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         //start at bottom of list and work your way back up
         for(int i = maxBits; i>=0; i--) {
             //use modular to cut off significant bits
-            int cutValue =  (int) (wrapVal / (Math.pow(2, maxBits-i)));
+//            int cutValue =  (int) (wrapVal / (Math.pow(2, maxBits-i)));
+            int cutValue = wrapVal >> maxBits - i;
             IntPair currPair = new IntPair(i, cutValue);
             //if inside tree update max and min
             if(valueMap.containsKey(currPair)) {
@@ -90,7 +91,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         int wrapVal = delVal;
         assert 0 <= wrapVal && wrapVal < Math.pow(2, maxBits);
         for(int i = maxBits; i>=0; i--) {
-            int cutValue = (int) (wrapVal / (Math.pow(2, maxBits-i)));
+            int cutValue = wrapVal>> maxBits - i;
             IntPair checkPair = new IntPair(i,cutValue);
             //if node exists
             if(valueMap.containsKey(checkPair)) {
@@ -131,7 +132,7 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         int value = 0;
         while(high - low > 1) {
             final int i = (high + low ) /2;
-            final int cutValue = (int) (keyObject / (Math.pow(2, maxBits-i)));
+            final int cutValue = keyObject >> maxBits - i;
 //            System.out.println(i + "|" + cutValue);
             final IntPair checkPair = new IntPair(i, cutValue);
             if(valueMap.containsKey(checkPair)) {
