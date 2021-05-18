@@ -193,8 +193,6 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         assert -1 <= keyObject && keyObject < Math.pow(2, maxBits);
 
         IntPair commonAncestor = findCommonAncestor(keyObject);
-//        System.out.println(commonAncestor.toString());
-//        System.out.println(valueMap.get(commonAncestor).toString());
 
         final int checkMax;
         final int checkMin;
@@ -212,9 +210,8 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         else if(checkMin > keyObject) {
             return checkMin;
         }else {
-//            System.out.println(check + "");
+
             Node minNode = leafList.getNode(checkMax);
-//            return 
             
             final int check2  = minNode.getNext().getValue();
             if(check2 == (int)Math.pow(2, maxBits)) {
