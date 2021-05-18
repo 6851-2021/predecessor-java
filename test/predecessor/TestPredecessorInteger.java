@@ -219,13 +219,13 @@ public abstract class TestPredecessorInteger {
     }
 
     //TODO: Find a better name for this test csae
-    @Test public void testEdgeCase() {
+    @Test public void testFullySaturatedOrEmptySubtrees() {
         Predecessor<Integer> check = emptyInstance(5);
 
-        check.insertAll(Set.of(0,1,2,3,4,15,14,13,12));
+        check.insertAll(Set.of(0,1,2,3,15,14,13,12));
         
-        for(int i  = 5; i<12; i++){ 
-            assertEquals(4, check.predecessor(i));
+        for(int i  = 4; i<12; i++){ 
+            assertEquals(3, check.predecessor(i));
             assertEquals(12, check.successor(i));  
         }
       
