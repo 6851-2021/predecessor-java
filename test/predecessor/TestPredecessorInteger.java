@@ -218,13 +218,28 @@ public abstract class TestPredecessorInteger {
         
     }
 
+    //TODO: Find a better name for this test csae
+    @Test public void testEdgeCase() {
+        Predecessor<Integer> check = emptyInstance(5);
+
+        check.insertAll(Set.of(0,1,2,3,4,15,14,13,12));
+        
+        for(int i  = 5; i<12; i++){ 
+            assertEquals(4, check.predecessor(i));
+            assertEquals(12, check.successor(i));  
+        }
+      
+
+
+        
+    }
     
     //large scale comparison where we compare toa  tree set
     @Test public void testCompareToTreeSet() {
         
-        final int universeBits = 20;
+        final int universeBits = 10;
         final int numberOfElements = 1000;
-        final int queries = 100;
+        final int queries = 1000;
         
         final int scale = (int)  Math.pow(2, universeBits) ;
         
