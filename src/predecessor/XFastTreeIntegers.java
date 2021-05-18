@@ -159,23 +159,25 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
 //        System.out.println(commonAncestor.toString());
 //        System.out.println(valueMap.get(commonAncestor).toString());
 
-        final int check;
+        final int checkMax;
+        final int checkMin;
         try {
-            check = valueMap.get(commonAncestor).min;
+            checkMax = valueMap.get(commonAncestor).max;
+            checkMin = valueMap.get(commonAncestor).min;
         }catch(NullPointerException e){
             throw new NoElementException("Common Ancestor is null");
             
         }
-        
-        if(check == this.defaultMin) {
+        //check empty list
+        if(checkMin == this.defaultMin && checkMax == this.defaultMax) {
             throw new NoElementException("Empty List");
         }
-        else
-        if(check < keyObject) {
-            return check;
+        //if max is smalle rits predecssor
+        else if(checkMax < keyObject) {
+            return checkMax;
         }else {
-            
-            Node minNode = leafList.getNode(check);
+            //if not check min node and move left
+            Node minNode = leafList.getNode(checkMin);
             
             final int check2  = minNode.getPrev().getValue();
             if(check2 == -1) {
@@ -193,18 +195,25 @@ public class XFastTreeIntegers implements Predecessor<Integer>{
         IntPair commonAncestor = findCommonAncestor(keyObject);
 //        System.out.println(commonAncestor.toString());
 //        System.out.println(valueMap.get(commonAncestor).toString());
-        final int check;
-     
-        check = valueMap.get(commonAncestor).max;
-        
-        if(check == this.defaultMax) {
+
+        final int checkMax;
+        final int checkMin;
+        try {
+            checkMax = valueMap.get(commonAncestor).max;
+            checkMin = valueMap.get(commonAncestor).min;
+        }catch(NullPointerException e){
+            throw new NoElementException("Common Ancestor is null");
+            
+        }
+            
+        if(checkMin == this.defaultMin && checkMax == this.defaultMax) {
             throw new NoElementException("Empty List");
         }
-        else if(check > keyObject) {
-            return check;
+        else if(checkMin > keyObject) {
+            return checkMin;
         }else {
 //            System.out.println(check + "");
-            Node minNode = leafList.getNode(check);
+            Node minNode = leafList.getNode(checkMax);
 //            return 
             
             final int check2  = minNode.getNext().getValue();
